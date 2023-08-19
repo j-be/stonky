@@ -14,7 +14,12 @@
 		"test:integration": "playwright test",
 		"test:unit": "vitest"
 	},
+	"dependencies": {
+		"@picocss/pico": "^1.5.10",
+		"date-fns": "^2.30.0"
+	},
 	"devDependencies": {
+		"@picocss/pico": "^1.5.10",
 		"@playwright/test": "^1.28.1",
 		"@sveltejs/adapter-auto": "^2.0.0",
 		"@sveltejs/kit": "^1.20.4",
@@ -25,6 +30,7 @@
 		"eslint-plugin-svelte": "^2.30.0",
 		"prettier": "^2.8.0",
 		"prettier-plugin-svelte": "^2.10.1",
+		"sass": "^1.66.1",
 		"svelte": "^4.0.5",
 		"svelte-check": "^3.4.3",
 		"tslib": "^2.4.1",
