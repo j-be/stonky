@@ -1,5 +1,5 @@
 // const BASE_URL = 'https://query2.finance.yahoo.com/v8/finance/chart/DT';
-const BASE_URL = 'http://localhost:8080/v8/finance/chart/DT';
+const BASE_URL = 'https://yfinance.great-horned-owl.dedyn.io/v8/finance/chart/DT';
 
 export const fetchForDateString = (dateString: string) => fetchForDate(new Date(dateString).getTime() / 1000);
 
