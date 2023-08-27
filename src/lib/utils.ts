@@ -10,3 +10,9 @@ export const getDate = (startDate: string, i: number, duration: Duration) => {
 		isInPast: isPast(date),
 	};
 };
+
+export const formatNumber = (value: number, digits = 2) =>
+	`${value.toLocaleString(undefined, {
+		minimumFractionDigits: digits,
+		maximumFractionDigits: digits,
+	})}`;
