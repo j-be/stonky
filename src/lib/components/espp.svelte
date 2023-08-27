@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { fetchForDateString } from '$lib/yfinance-api';
-	import { onMount } from 'svelte';
+	import { createEventDispatcher, onMount } from 'svelte';
 	import type { EmployeeStockPurchase } from '../model';
 	import Money from './money.svelte';
 	import { formatNumber } from '$lib/utils';
@@ -19,6 +19,8 @@
 	let currentValue = 0;
 	let netValue = 0;
 
+	const dispatch = createEventDispatcher();
+
 	onMount(async () => {
 		startPrice = await fetchForDateString(espp.periodStart);
 		endPrice = await fetchForDateString(espp.periodEnd);
@@ -32,6 +34,7 @@
 	$: currentValue = espp.count * currentPrice;
 	$: isTaxFree = (intervalToDuration({start: new Date(espp.periodEnd), end: new Date()}).years ?? 0) > 4;
 	$: netValue = currentValue - (isTaxFree ? 0 : discount * TAX) - (Math.max(capitalGains, 0) * 0.25)
+	$: dispatch('currentNet', { value: netValue });
 </script>
 
 <div class="grid">

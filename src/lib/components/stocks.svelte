@@ -7,18 +7,26 @@
 
 	export let stock: RestrictedStockUnits | EmployeeStockPurchase;
 	export let currentPrice: number;
+
+	let value = 0;
+
+	const handleCurrentValue = (currentValue: CustomEvent<{ value: number }>) => {
+		value = currentValue.detail.value;
+	};
+
+	$: if (stock.type === 'rsu') value = stock.count * currentPrice;
 </script>
 
 <details>
 	<summary style="display: flex; flex-direction: row;">
 		<div style="flex-grow: 1;"><span style="text-transform: uppercase">{stock.type}</span> {stock.count}</div>
-		<div style="white-space: nowrap;"><Money value={stock.count * currentPrice} deductTax={stock.type == 'rsu'} /></div>
+		<div style="white-space: nowrap;"><Money {value} deductTax={stock.type == 'rsu'} /></div>
 	</summary>
 	<p>
 		{#if stock.type === 'rsu'}
 			<Rsu rsu={stock} {currentPrice} />
 		{:else if stock.type === 'espp'}
-			<Espp espp={stock} {currentPrice} />
+			<Espp on:currentNet={handleCurrentValue} espp={stock} {currentPrice} />
 		{:else}
 			Unknown Type
 		{/if}
