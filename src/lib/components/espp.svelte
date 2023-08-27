@@ -2,46 +2,99 @@
 	import { fetchForDateString } from '$lib/yfinance-api';
 	import { onMount } from 'svelte';
 	import type { EmployeeStockPurchase } from '../model';
-	import FormattedNumber from './formattedNumber.svelte';
 	import Money from './money.svelte';
+	import { formatNumber } from '$lib/utils';
+	import { TAX } from '$lib/constants';
+	import { intervalToDuration } from 'date-fns';
 
 	export let espp: EmployeeStockPurchase;
 	export let currentPrice: number;
 
 	let startPrice = 0;
 	let endPrice = 0;
+
 	let purchasePrice = 0;
+	let discount = 0;
+	let capitalGains = 0;
+	let currentValue = 0;
+	let netValue = 0;
 
 	onMount(async () => {
 		startPrice = await fetchForDateString(espp.periodStart);
 		endPrice = await fetchForDateString(espp.periodEnd);
-		purchasePrice = Math.min(startPrice, endPrice) * 0.85;
 	});
+
+	// 15% discount on the lower of the two prices
+	$: purchasePrice = Math.min(startPrice, endPrice) * 0.85;
+	$: paid = espp.count * purchasePrice;
+	$: discount = espp.count * (endPrice - purchasePrice);
+	$: capitalGains = espp.count * (currentPrice - endPrice);
+	$: currentValue = espp.count * currentPrice;
+	$: isTaxFree = (intervalToDuration({start: new Date(espp.periodEnd), end: new Date()}).years ?? 0) > 4;
+	$: netValue = currentValue - (isTaxFree ? 0 : discount * TAX) - (Math.max(capitalGains, 0) * 0.25)
 </script>
 
-
 <div class="grid">
 	<div>
-		Start: {espp.periodStart}
-		<FormattedNumber value={startPrice} unit="$" />
+		<table>
+			<thead>
+				<tr>
+					<th colspan="2">Overview</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>Price paid</td>
+					<td>
+						<em data-tooltip="{espp.count} x {formatNumber(purchasePrice)} $">
+							<Money value={paid} deductTax={false} />
+						</em>
+					</td>
+				</tr>
+				<tr>
+					<td>Net if sold now</td>
+					<td>
+						<em data-tooltip="CurrentValue - TaxOnDiscount - CapitalGainTax">
+							<Money value={netValue} deductTax={false} />
+						</em>
+					</td>
+				</tr>
+				<tr>
+					<td>Net profit if sold now</td>
+					<td><Money value={netValue - paid} deductTax={false} /></td>
+				</tr>
+			</tbody>
+		</table>
 	</div>
 	<div>
-		End: {espp.periodEnd}
-		<FormattedNumber value={endPrice} unit="$" />
+		<table>
+			<thead>
+				<tr>
+					<th>Details</th>
+					<th>{espp.periodStart} - {espp.periodEnd}</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>Current value</td>
+					<td><Money value={currentValue} deductTax={false} /></td>
+				</tr>
+				{#if isTaxFree}
+				<tr>
+					<td>Discount (untaxed)</td>
+					<td><Money value={discount} deductTax={false} /></td>
+				</tr>
+				{:else}
+				<tr>
+					<td>Discount (taxed)</td>
+					<td><Money value={discount * (1 - TAX)} deductTax={false} /></td>
+				</tr>
+				{/if}
+				<tr>
+					<td>Capital gains</td>
+					<td><Money value={capitalGains} deductTax={false} /></td>
+				</tr>
+			</tbody>
+		</table>
 	</div>
-	<div>
-		Purchase price:
-		<FormattedNumber value={purchasePrice} unit="$" />
-	</div>
-</div>
-<div class="grid">
-	<div>Number of stocks: {espp.count}</div>
-	<!--<div>Current price: <Money value={currentPrice} deductTax={false} /></div>-->
-	<div>Bought for: <Money value={espp.count * purchasePrice} deductTax={false} /></div>
-	<div>Current value: <Money value={espp.count * currentPrice} deductTax={false} /></div>
-</div>
-<div class="grid">
-	<div />
-	<div>Salary (gross): <Money value={espp.count * (endPrice - purchasePrice)} deductTax={false} /></div>
-	<div>Kapitalertrag: <Money value={espp.count * (currentPrice - endPrice)} deductTax={false} /></div>
 </div>
