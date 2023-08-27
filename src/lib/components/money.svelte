@@ -6,5 +6,5 @@
 	export let value: number;
 	export let deductTax: boolean = true;
 </script>
-<FormattedNumber value={value * (deductTax ? TAX : 1) * DOLLAR_TO_EURO} unit="€" />
+<FormattedNumber value={value * (deductTax ? (1 - TAX) : 1) * DOLLAR_TO_EURO} unit="€" />
 <small class="muted">(<FormattedNumber {value} unit="$" />)</small>
