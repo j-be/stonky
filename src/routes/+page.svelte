@@ -25,3 +25,5 @@
 {:else}
 	Loading current price
 {/if}
+
+<a href="/add" role="button"><b>+</b></a>
