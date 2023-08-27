@@ -2,8 +2,7 @@
 	import type { EmployeeStockPurchase, RestrictedStockUnits } from '$lib/model';
 
 	import Stocks from '$lib/components/stocks.svelte';
-	import { fetchForDate } from '$lib/yfinance-api';
-	import Money from '$lib/components/money.svelte';
+	import { fetchForNow } from '$lib/yfinance-api';
 
 	import { onMount } from 'svelte';
 
@@ -13,7 +12,7 @@
 	let currentPrice: number | null = null;
 
 	onMount(async () => {
-		currentPrice = await fetchForDate(new Date().getTime() / 1000 - 24 * 60 * 60);
+		currentPrice = await fetchForNow('DT');
 	});
 </script>
 

@@ -22,8 +22,8 @@
 	const dispatch = createEventDispatcher();
 
 	onMount(async () => {
-		startPrice = await fetchForDateString(espp.periodStart);
-		endPrice = await fetchForDateString(espp.periodEnd);
+		startPrice = await fetchForDateString(espp.periodStart, 'DT');
+		endPrice = await fetchForDateString(espp.periodEnd, 'DT');
 	});
 
 	// 15% discount on the lower of the two prices
