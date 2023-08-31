@@ -1,14 +1,18 @@
 <script lang="ts">
+	import type { Duration } from '$lib/model';
 	import { rsuStore } from '$lib/stores';
 	import ActionButtons from './actionButtons.svelte';
 	import { goto } from '$app/navigation';
+	import VestingPeriod from './vestingPeriod.svelte';
+
+	const defaultDuration: Duration = { amount: 1, unit: 'years' };
 
 	let count = 0;
 	let granted = '';
 	let firstVestPercentage = 0;
-	let firstVestAfterMonths = 0;
+	let firstVestDuration: Duration = { ...defaultDuration };
 	let subsequentVestsPercentage = 0;
-	let subsequentVestsAfterMonths = 0;
+	let subsequentVestsDuration: Duration = { ...defaultDuration };
 
 	let valid = false;
 
@@ -41,18 +45,27 @@
 		count = 0;
 		granted = '';
 		firstVestPercentage = 0;
-		firstVestAfterMonths = 0;
+		firstVestDuration = { ...defaultDuration };
 		subsequentVestsPercentage = 0;
-		subsequentVestsAfterMonths = 0;
+		subsequentVestsDuration = { ...defaultDuration };
+	};
+
+	const firstVestDurationChanged = (event: CustomEvent<Duration>) => {
+		firstVestDuration = event.detail;
+	};
+
+	const subsequentVestsDurationChanged = (event: CustomEvent<Duration>) => {
+		subsequentVestsDuration = event.detail;
 	};
 
 	$: valid =
 		!!count &&
 		!!granted &&
-		!!firstVestAfterMonths &&
-		!!firstVestAfterMonths &&
-		!!subsequentVestsAfterMonths &&
-		!!subsequentVestsPercentage;
+		!!firstVestPercentage &&
+		!!firstVestDuration.amount &&
+		!!firstVestDuration.unit &&
+		!!subsequentVestsDuration.amount &&
+		!!subsequentVestsDuration.unit;
 </script>
 
 <form on:submit|preventDefault={save}>
@@ -70,10 +83,7 @@
 		Percentage
 		<input id="firstVestPercentage" type="number" bind:value={firstVestPercentage} min="0" step="0.0000000001" />
 	</label>
-	<label for="firstVestMonths">
-		Number of months
-		<input id="firstVestAfterMonths" type="number" bind:value={firstVestAfterMonths} min="0" />
-	</label>
+	<VestingPeriod {...firstVestDuration} on:change={firstVestDurationChanged} />
 
 	<h4>Subsequent vests</h4>
 	<label for="firstVestPercentage">
@@ -86,10 +96,7 @@
 			step="0.0000000001"
 		/>
 	</label>
-	<label for="firstVestMonths">
-		Number of month
-		<input id="subsequentVestsAfterMonths" type="number" bind:value={subsequentVestsAfterMonths} min="0" />
-	</label>
+	<VestingPeriod {...subsequentVestsDuration} on:change={subsequentVestsDurationChanged} />
 
 	<ActionButtons {valid} {reset} />
 </form>

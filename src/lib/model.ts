@@ -5,7 +5,7 @@ interface Stock {
 
 export type StockType = 'rsu' | 'espp';
 
-export type TemporalUnit = 'months';
+export type TemporalUnit = 'months' | 'years' | 'quarters';
 
 export interface Duration {
 	amount: number;
