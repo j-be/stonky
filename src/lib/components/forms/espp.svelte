@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { EmployeeStockPurchase } from '$lib/model';
+	import { esppStore } from '$lib/stores';
 	import { addDays, addMonths, format } from 'date-fns';
 	import ActionButtons from './actionButtons.svelte';
 	import { goto } from '$app/navigation';
@@ -28,14 +28,15 @@
 			return;
 		}
 
-		const espps: EmployeeStockPurchase[] = JSON.parse(localStorage.getItem('espp') ?? '[]');
-		espps.push({
-			type: 'espp',
-			count: count!,
-			periodStart,
-			periodEnd,
-		});
-		localStorage.setItem('espp', JSON.stringify(espps));
+		esppStore.update((current) => [
+			...current,
+			{
+				type: 'espp',
+				count: count!,
+				periodStart,
+				periodEnd,
+			},
+		]);
 
 		goto('/');
 	};

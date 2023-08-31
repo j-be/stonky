@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { RestrictedStockUnits } from '$lib/model';
+	import { rsuStore } from '$lib/stores';
 	import ActionButtons from './actionButtons.svelte';
 	import { goto } from '$app/navigation';
 
@@ -17,21 +17,22 @@
 			return;
 		}
 
-		const rsus: RestrictedStockUnits[] = JSON.parse(localStorage.getItem('rsu') ?? '[]');
-		rsus.push({
-			type: 'rsu',
-			count,
-			granted,
-			firstVest: {
-				percentage: firstVestPercentage,
-				duration: { amount: firstVestAfterMonths, unit: 'months' },
+		rsuStore.update((current) => [
+			...current,
+			{
+				type: 'rsu',
+				count,
+				granted,
+				firstVest: {
+					percentage: firstVestPercentage,
+					duration: firstVestDuration,
+				},
+				subsequentVests: {
+					percentage: subsequentVestsPercentage,
+					duration: subsequentVestsDuration,
+				},
 			},
-			subsequentVests: {
-				percentage: subsequentVestsPercentage,
-				duration: { amount: subsequentVestsAfterMonths, unit: 'months' },
-			},
-		});
-		localStorage.setItem('rsu', JSON.stringify(rsus));
+		]);
 
 		goto('/');
 	};
