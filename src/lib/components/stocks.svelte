@@ -5,6 +5,7 @@
 	import Money from './money.svelte';
 	import Rsu from './rsu.svelte';
 
+	export let id: number;
 	export let stock: RestrictedStockUnits | EmployeeStockPurchase;
 	export let currentPrice: number;
 
@@ -19,7 +20,13 @@
 
 <details>
 	<summary style="display: flex; flex-direction: row;">
-		<div style="flex-grow: 1;"><span style="text-transform: uppercase">{stock.type}</span> {stock.count}</div>
+		<div class="title" style="flex-grow: 1;">
+			<a href="/edit/{stock.type}/{id}" class="outline">Edit</a>
+			<span>
+				<span style="text-transform: uppercase">{stock.type}</span>
+				{stock.count}
+			</span>
+		</div>
 		<div style="white-space: nowrap;"><Money {value} deductTax={stock.type == 'rsu'} /></div>
 	</summary>
 	<p>

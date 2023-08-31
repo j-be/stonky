@@ -21,3 +21,16 @@ export const esppStore: Writable<EmployeeStockPurchase[]> =
 	typeof localStorage === 'undefined' ? createNodeStore() : createBrowserStore('espp');
 export const rsuStore: Writable<RestrictedStockUnits[]> =
 	typeof localStorage === 'undefined' ? createNodeStore() : createBrowserStore('rsu');
+
+
+export const insertOrUpdate = <T>(current: T[], entity: T, id: number | null = null) => {
+	const newState = [...current];
+
+	if (id === null) {
+		newState.push(entity);
+	} else {
+		newState[id] = entity;
+	}
+
+	return newState;
+}

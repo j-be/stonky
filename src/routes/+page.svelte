@@ -22,8 +22,10 @@
 <h1>Stonky</h1>
 
 {#if currentPrice}
-	{#each [...espps, ...rsus] as stock}
-		<Stocks {stock} {currentPrice} />
+	{#each [espps, rsus] as stocks, i}
+	{#each stocks as stock, id}
+		<Stocks {id} {stock} {currentPrice} />
+	{/each}
 	{/each}
 {:else}
 	Loading current price

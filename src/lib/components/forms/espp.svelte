@@ -1,14 +1,26 @@
 <script lang="ts">
-	import { esppStore } from '$lib/stores';
+	import { insertOrUpdate, esppStore } from '$lib/stores';
 	import { addDays, addMonths, format } from 'date-fns';
 	import ActionButtons from './actionButtons.svelte';
 	import { goto } from '$app/navigation';
+	import { onMount } from 'svelte';
+
+	export let id: number | null = null;
 
 	let periodStart = '';
 	let periodEnd = '';
 	let count = 0;
 
 	let valid = false;
+
+	onMount(() => {
+		if (id === null) {
+			return;
+		}
+		esppStore.subscribe((espps) => {
+			({ periodStart, periodEnd, count } = espps[id!]);
+		});
+	});
 
 	const handlePeriodStartChange = () => {
 		if (periodEnd) {
@@ -28,15 +40,18 @@
 			return;
 		}
 
-		esppStore.update((current) => [
-			...current,
-			{
-				type: 'espp',
-				count: count!,
-				periodStart,
-				periodEnd,
-			},
-		]);
+		esppStore.update((current) =>
+			insertOrUpdate(
+				current,
+				{
+					type: 'espp',
+					count: count!,
+					periodStart,
+					periodEnd,
+				},
+				id,
+			),
+		);
 
 		goto('/');
 	};

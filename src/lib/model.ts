@@ -3,7 +3,12 @@ interface Stock {
 	type: StockType;
 }
 
-export type StockType = 'rsu' | 'espp';
+const ALL_STOCK_TYPES = ['rsu', 'espp'] as const;
+export type StockType = (typeof ALL_STOCK_TYPES)[number];
+
+export const isStockType = (value: string): value is StockType => {
+	return ALL_STOCK_TYPES.includes(value as StockType);
+};
 
 export type TemporalUnit = 'months' | 'years' | 'quarters';
 

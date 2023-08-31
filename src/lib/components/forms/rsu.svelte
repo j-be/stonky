@@ -1,11 +1,14 @@
 <script lang="ts">
 	import type { Duration } from '$lib/model';
-	import { rsuStore } from '$lib/stores';
+	import { insertOrUpdate, rsuStore } from '$lib/stores';
+	import { onMount } from 'svelte';
 	import ActionButtons from './actionButtons.svelte';
 	import { goto } from '$app/navigation';
 	import VestingPeriod from './vestingPeriod.svelte';
 
 	const defaultDuration: Duration = { amount: 1, unit: 'years' };
+
+	export let id: number | null = null;
 
 	let count = 0;
 	let granted = '';
@@ -16,27 +19,44 @@
 
 	let valid = false;
 
+	onMount(() => {
+		if (id === null) {
+			return;
+		}
+		rsuStore.subscribe((rsus) => {
+			({
+				count,
+				granted,
+				firstVest: { percentage: firstVestPercentage, duration: firstVestDuration },
+				subsequentVests: { percentage: subsequentVestsPercentage, duration: subsequentVestsDuration },
+			} = rsus[id!]);
+		});
+	});
+
 	const save = () => {
 		if (!valid) {
 			return;
 		}
 
-		rsuStore.update((current) => [
-			...current,
-			{
-				type: 'rsu',
-				count,
-				granted,
-				firstVest: {
-					percentage: firstVestPercentage,
-					duration: firstVestDuration,
+		rsuStore.update((current) =>
+			insertOrUpdate(
+				current,
+				{
+					type: 'rsu',
+					count,
+					granted,
+					firstVest: {
+						percentage: firstVestPercentage,
+						duration: firstVestDuration,
+					},
+					subsequentVests: {
+						percentage: subsequentVestsPercentage,
+						duration: subsequentVestsDuration,
+					},
 				},
-				subsequentVests: {
-					percentage: subsequentVestsPercentage,
-					duration: subsequentVestsDuration,
-				},
-			},
-		]);
+				id,
+			),
+		);
 
 		goto('/');
 	};
