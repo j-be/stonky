@@ -4,3 +4,42 @@
 .muted {
 	color: var(--secondary);
 }
+
+details, summary {
+	border-radius: var(--border-radius);
+}
+
+details {
+	padding-bottom: 0;
+
+	&[open] {
+		background-color: var(--card-sectionning-background-color);
+
+		> summary {
+			margin: 0;
+			padding: calc(var(--spacing));
+
+			&:focus:not([role="button"]) {
+				color: var(--accordion-open-summary-color);
+			}
+		}
+	}
+
+	table:last-child {
+		margin: 0;
+	}
+
+	> summary {
+		background-color: var(--card-background-color);
+		padding: calc(var(--spacing));
+
+		&:focus:not([role="button"]) {
+			color: var(--accordion-close-summary-color);
+		}
+
+		> .title {
+			display: flex;
+			gap: calc(var(--spacing));
+		}
+	}
+}

@@ -29,13 +29,12 @@
 		</div>
 		<div style="white-space: nowrap;"><Money {value} deductTax={stock.type == 'rsu'} /></div>
 	</summary>
-	<p>
-		{#if stock.type === 'rsu'}
-			<Rsu rsu={stock} {currentPrice} />
-		{:else if stock.type === 'espp'}
-			<Espp on:currentNet={handleCurrentValue} espp={stock} {currentPrice} />
-		{:else}
-			Unknown Type
-		{/if}
-	</p>
+
+	{#if stock.type === 'rsu'}
+		<Rsu rsu={stock} {currentPrice} />
+	{:else if stock.type === 'espp'}
+		<Espp on:currentNet={handleCurrentValue} espp={stock} {currentPrice} />
+	{:else}
+		Unknown Type
+	{/if}
 </details>

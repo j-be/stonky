@@ -43,7 +43,7 @@
 		<tr>
 			<th>Vesting date</th>
 			<th>Amount</th>
-			<th>Current worth</th>
+			<th>Current net worth</th>
 		</tr>
 	</thead>
 	<tbody>
