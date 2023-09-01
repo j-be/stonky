@@ -77,6 +77,7 @@
 		!!subsequentVestsDuration.amount &&
 		!!subsequentVestsDuration.unit;
 	$: id !== null &&
+		$stocksStore.rsu.stocks[id] &&
 		({
 			count,
 			granted,
