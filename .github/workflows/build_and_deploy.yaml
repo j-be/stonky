@@ -16,6 +16,18 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v3
 
+    # Build Stonky
+    - name: Setup Node
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18'
+
+    - name: Install
+      run: npm install
+
+    - name: Build
+      run: npm run build
+
     # Setup Buildx
     - name: Set up QEMU
       uses: docker/setup-qemu-action@v2
@@ -43,6 +55,7 @@ jobs:
     - name: Build
       uses: docker/build-push-action@v4
       with:
+        context: .
         push: true
         platforms: linux/amd64,linux/arm64
         tags: ${{ steps.meta.outputs.tags }}
