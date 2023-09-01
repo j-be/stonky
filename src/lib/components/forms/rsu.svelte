@@ -1,7 +1,6 @@
 <script lang="ts">
 	import type { Duration } from '$lib/model';
 	import { insertOrUpdate, stocksStore } from '$lib/stores';
-	import { onMount } from 'svelte';
 	import ActionButtons from './actionButtons.svelte';
 	import { goto } from '$app/navigation';
 	import VestingPeriod from './vestingPeriod.svelte';

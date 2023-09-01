@@ -4,7 +4,7 @@
 
 	import Stocks from '$lib/components/stocks.svelte';
 
-	let currentPrice: number = -1;
+	let currentPrice = -1;
 	let exchangeRate: number | null = null;
 	let espps: EmployeeStockPurchase[] = [];
 	let rsus: RestrictedStockUnits[] = [];

@@ -38,7 +38,7 @@
 					current.espp.stocks,
 					{
 						type: 'espp',
-						count: count!,
+						count,
 						periodStart,
 						periodEnd,
 					},
