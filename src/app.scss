@@ -70,6 +70,7 @@ body div.vest-row {
 	flex-direction: row;
 	gap: 15px;
 	padding-bottom: calc(var(--spacing));
+	white-space: nowrap;
 
 	* {
 		margin: auto;
@@ -85,5 +86,17 @@ body div.vest-row {
 
 	> *:first-child {
 		width: 33%;
+	}
+}
+
+.vesting-period {
+	display: flex;
+
+	input {
+		flex-shrink: 5
+	}
+
+	select {
+		flex-shrink: 3;
 	}
 }
