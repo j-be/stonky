@@ -18,6 +18,9 @@
 			return;
 		}
 		stocksStore.subscribe((stocks) => {
+			if (!stocks.espp.stocks[id!]) {
+				return;
+			}
 			({ periodStart, periodEnd, count } = stocks.espp.stocks[id!]);
 		});
 	});

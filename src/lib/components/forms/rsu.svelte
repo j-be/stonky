@@ -24,6 +24,9 @@
 			return;
 		}
 		stocksStore.subscribe((stocks) => {
+			if (!stocks.rsu.stocks[id!]) {
+				return;
+			}
 			({
 				count,
 				granted,
