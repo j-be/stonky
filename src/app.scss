@@ -5,7 +5,8 @@
 	color: var(--secondary);
 }
 
-details, summary {
+details,
+summary {
 	border-radius: var(--border-radius);
 }
 
@@ -19,7 +20,7 @@ details {
 			margin: 0;
 			padding: calc(var(--spacing));
 
-			&:focus:not([role="button"]) {
+			&:focus:not([role='button']) {
 				color: var(--accordion-open-summary-color);
 			}
 		}
@@ -33,7 +34,7 @@ details {
 		background-color: var(--card-background-color);
 		padding: calc(var(--spacing));
 
-		&:focus:not([role="button"]) {
+		&:focus:not([role='button']) {
 			color: var(--accordion-close-summary-color);
 		}
 
@@ -61,5 +62,28 @@ details {
 		background-color: var(--del-color);
 		border-color: var(--form-element-invalid-border-color);
 		margin-bottom: 0;
+	}
+}
+
+body div.vest-row {
+	display: flex;
+	flex-direction: row;
+	gap: 15px;
+	padding-bottom: calc(var(--spacing));
+
+	* {
+		margin: auto;
+	}
+
+	input {
+		margin-bottom: 0;
+	}
+
+	> div:last-child {
+		flex-grow: 1;
+	}
+
+	> *:first-child {
+		width: 33%;
 	}
 }

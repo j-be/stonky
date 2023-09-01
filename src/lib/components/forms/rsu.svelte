@@ -105,25 +105,25 @@
 		<input id="granted" type="date" bind:value={granted} />
 	</label>
 
-	<h4>First vest</h4>
-	<label for="firstVestPercentage">
-		Percentage
-		<input id="firstVestPercentage" type="number" bind:value={firstVestPercentage} min="0" step="0.0000000001" />
+	<label for="firstVest">
+		First vest
+		<div id="firstVest" class="vest-row">
+			<input type="number" bind:value={firstVestPercentage} min="0" step="0.0000000001" />
+			<span>% after</span>
+			<VestingPeriod {...firstVestDuration} on:change={firstVestDurationChanged} />
+			<div />
+		</div>
 	</label>
-	<VestingPeriod {...firstVestDuration} on:change={firstVestDurationChanged} />
 
-	<h4>Subsequent vests</h4>
-	<label for="firstVestPercentage">
-		Percentage
-		<input
-			id="subsequentVestsPercentage"
-			type="number"
-			bind:value={subsequentVestsPercentage}
-			min="0"
-			step="0.0000000001"
-		/>
+	<label for="subsequentVests">
+		Subsequent vests
+		<div id="subsequentVests" class="vest-row">
+			<input type="number" bind:value={subsequentVestsPercentage} min="0" step="0.0000000001" />
+			<span>% every</span>
+			<VestingPeriod {...subsequentVestsDuration} on:change={subsequentVestsDurationChanged} />
+			<div />
+		</div>
 	</label>
-	<VestingPeriod {...subsequentVestsDuration} on:change={subsequentVestsDurationChanged} />
 
 	<ActionButtons {valid} {reset} />
 </form>
