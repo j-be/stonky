@@ -12,7 +12,7 @@
 	};
 </script>
 
-<div class="grid">
+<div class="vesting-period">
 	<input type="number" bind:value={amount} min="1" on:change={onChangeHandler} />
 	<select bind:value={unit} on:change={onChangeHandler}>
 		{#each ['years', 'quarters', 'months'] as option}
