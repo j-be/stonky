@@ -1,12 +1,11 @@
 <script lang="ts">
-	import { fetchForDateString } from '$lib/yfinance-api';
-	import { createEventDispatcher, onMount } from 'svelte';
 	import type { EmployeeStockPurchase } from '../model';
 	import Money from './money.svelte';
-	import { formatNumber } from '$lib/utils';
-	import { TAX } from '$lib/constants';
+	import { createEventDispatcher, onMount } from 'svelte';
 	import { intervalToDuration } from 'date-fns';
-	import { stockPriceStore } from '$lib/stores';
+	import { stockPriceStore, taxStore } from '$lib/stores';
+	import { fetchForDateString } from '$lib/yfinance-api';
+	import { formatNumber } from '$lib/utils';
 
 	export let espp: EmployeeStockPurchase;
 
@@ -33,7 +32,7 @@
 	$: capitalGains = espp.count * ($stockPriceStore - endPrice);
 	$: currentValue = espp.count * $stockPriceStore;
 	$: isTaxFree = (intervalToDuration({ start: new Date(espp.periodEnd), end: new Date() }).years ?? 0) > 4;
-	$: netValue = currentValue - (isTaxFree ? 0 : discount * TAX) - Math.max(capitalGains, 0) * 0.25;
+	$: netValue = currentValue - (isTaxFree ? 0 : discount * $taxStore) - Math.max(capitalGains, 0) * 0.25;
 	$: dispatch('currentNet', { value: netValue });
 </script>
 
@@ -90,7 +89,7 @@
 				{:else}
 					<tr>
 						<td>Discount (taxed)</td>
-						<td><Money value={discount * (1 - TAX)} deductTax={false} /></td>
+						<td><Money value={discount * (1 - $taxStore)} deductTax={false} /></td>
 					</tr>
 				{/if}
 				<tr>

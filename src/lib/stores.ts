@@ -16,15 +16,18 @@ const createBrowserStore = <T>(name: string, initialValue: T) => {
 // just enough to not crash in Node
 const createNodeStore = <T>(initialValue: T) => writable<T>(initialValue);
 
-export const stocksStore: Writable<StocksStore> =
-	typeof localStorage === 'undefined'
-		? createNodeStore({ espp: { stocks: [] }, rsu: { stocks: [] } })
-		: createBrowserStore('stocks', { espp: { stocks: [] }, rsu: { stocks: [] } });
+const createPersistentStore = <T>(name: string, initialValue: T) =>
+	typeof localStorage === 'undefined' ? createNodeStore(initialValue) : createBrowserStore(name, initialValue);
 
 interface StocksStore {
 	espp: { stocks: EmployeeStockPurchase[] };
 	rsu: { stocks: RestrictedStockUnits[] };
 }
+
+export const stocksStore: Writable<StocksStore> = createPersistentStore('stocks', {
+	espp: { stocks: [] },
+	rsu: { stocks: [] },
+});
 
 export const insertOrUpdate = <T>(current: T[], entity: T, id: number | null = null) => {
 	const newState = [...current];
@@ -45,3 +48,5 @@ export const exchangeRateStore = readable<number | null>(null, function start(se
 export const stockPriceStore = readable(-1, function start(set) {
 	fetchForNow('DT').then(set);
 });
+
+export const taxStore = createPersistentStore('tax', 0.48);
