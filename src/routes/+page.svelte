@@ -5,14 +5,15 @@
 	import { fetchForNow } from '$lib/yfinance-api';
 
 	import { onMount } from 'svelte';
-	import { esppStore, rsuStore } from '$lib/stores';
+	import { stocksStore } from '$lib/stores';
 
 	let currentPrice: number | null = null;
 	let espps: EmployeeStockPurchase[] = [];
 	let rsus: RestrictedStockUnits[] = [];
 
-	esppStore.subscribe((esppsFromStore) => (espps = esppsFromStore));
-	rsuStore.subscribe((rsusFromStore) => (rsus = rsusFromStore));
+	stocksStore.subscribe((stocksFromStore) => {
+		({ espps, rsus } = { espps: stocksFromStore.espp.stocks, rsus: stocksFromStore.rsu.stocks });
+	});
 
 	onMount(async () => {
 		currentPrice = await fetchForNow('DT');
@@ -23,9 +24,9 @@
 
 {#if currentPrice}
 	{#each [espps, rsus] as stocks, i}
-	{#each stocks as stock, id}
-		<Stocks {id} {stock} {currentPrice} />
-	{/each}
+		{#each stocks as stock, id}
+			<Stocks {id} {stock} {currentPrice} />
+		{/each}
 	{/each}
 {:else}
 	Loading current price

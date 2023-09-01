@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { Duration } from '$lib/model';
-	import { insertOrUpdate, rsuStore } from '$lib/stores';
+	import { insertOrUpdate, stocksStore } from '$lib/stores';
 	import { onMount } from 'svelte';
 	import ActionButtons from './actionButtons.svelte';
 	import { goto } from '$app/navigation';
@@ -23,13 +23,13 @@
 		if (id === null) {
 			return;
 		}
-		rsuStore.subscribe((rsus) => {
+		stocksStore.subscribe((stocks) => {
 			({
 				count,
 				granted,
 				firstVest: { percentage: firstVestPercentage, duration: firstVestDuration },
 				subsequentVests: { percentage: subsequentVestsPercentage, duration: subsequentVestsDuration },
-			} = rsus[id!]);
+			} = stocks.rsu.stocks[id!]);
 		});
 	});
 
@@ -38,25 +38,29 @@
 			return;
 		}
 
-		rsuStore.update((current) =>
-			insertOrUpdate(
-				current,
-				{
-					type: 'rsu',
-					count,
-					granted,
-					firstVest: {
-						percentage: firstVestPercentage,
-						duration: firstVestDuration,
+		stocksStore.update((current) => ({
+			...current,
+			rsu: {
+				...current.rsu,
+				stocks: insertOrUpdate(
+					current.rsu.stocks,
+					{
+						type: 'rsu',
+						count,
+						granted,
+						firstVest: {
+							percentage: firstVestPercentage,
+							duration: firstVestDuration,
+						},
+						subsequentVests: {
+							percentage: subsequentVestsPercentage,
+							duration: subsequentVestsDuration,
+						},
 					},
-					subsequentVests: {
-						percentage: subsequentVestsPercentage,
-						duration: subsequentVestsDuration,
-					},
-				},
-				id,
-			),
-		);
+					id,
+				),
+			},
+		}));
 
 		goto('/');
 	};

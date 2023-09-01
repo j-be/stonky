@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { insertOrUpdate, esppStore } from '$lib/stores';
+	import { insertOrUpdate, stocksStore } from '$lib/stores';
 	import { addDays, addMonths, format } from 'date-fns';
 	import ActionButtons from './actionButtons.svelte';
 	import { goto } from '$app/navigation';
@@ -17,8 +17,8 @@
 		if (id === null) {
 			return;
 		}
-		esppStore.subscribe((espps) => {
-			({ periodStart, periodEnd, count } = espps[id!]);
+		stocksStore.subscribe((stocks) => {
+			({ periodStart, periodEnd, count } = stocks.espp.stocks[id!]);
 		});
 	});
 
@@ -40,18 +40,22 @@
 			return;
 		}
 
-		esppStore.update((current) =>
-			insertOrUpdate(
-				current,
-				{
-					type: 'espp',
-					count: count!,
-					periodStart,
-					periodEnd,
-				},
-				id,
-			),
-		);
+		stocksStore.update((current) => ({
+			...current,
+			espp: {
+				...current.espp,
+				stocks: insertOrUpdate(
+					current.espp.stocks,
+					{
+						type: 'espp',
+						count: count!,
+						periodStart,
+						periodEnd,
+					},
+					id,
+				),
+			},
+		}));
 
 		goto('/');
 	};
