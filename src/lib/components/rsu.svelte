@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { stockPriceStore } from '$lib/stores';
 	import type { RestrictedStockUnits, RsuVest } from '../model';
 
 	import { flattenRsu } from '../utils';
@@ -6,13 +7,12 @@
 	import Money from './money.svelte';
 
 	export let rsu: RestrictedStockUnits;
-	export let currentPrice: number;
 
 	let durationMonths = 0;
 	let vests: RsuVest[];
 
 	$: ({ durationMonths, vests } = flattenRsu(rsu));
-	$: currentValue = currentPrice * rsu.count;
+	$: currentValue = $stockPriceStore * rsu.count;
 </script>
 
 <table>
@@ -28,7 +28,7 @@
 			<tr class:muted={vest.date.isInPast}>
 				<td>{vest.date.dateString}</td>
 				<td><FormattedNumber value={vest.count} /></td>
-				<td><Money value={currentPrice * vest.count} /></td>
+				<td><Money value={$stockPriceStore * vest.count} /></td>
 			</tr>
 		{/each}
 	</tbody>

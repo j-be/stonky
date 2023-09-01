@@ -14,7 +14,7 @@ details {
 	padding-bottom: 0;
 
 	&[open] {
-		background-color: var(--card-sectionning-background-color);
+		background-color: var(--card-background-color);
 
 		> summary {
 			margin: 0;
@@ -31,7 +31,7 @@ details {
 	}
 
 	> summary {
-		background-color: var(--card-background-color);
+		background-color: var(--card-sectionning-background-color);
 		padding: calc(var(--spacing));
 
 		&:focus:not([role='button']) {
@@ -93,10 +93,25 @@ body div.vest-row {
 	display: flex;
 
 	input {
-		flex-shrink: 5
+		flex-shrink: 5;
 	}
 
 	select {
 		flex-shrink: 3;
+	}
+}
+
+.overview {
+	padding-top: calc(var(--spacing));
+	padding-bottom: calc(var(--spacing));
+	margin-bottom: calc(var(--spacing));
+
+	> header {
+		padding: calc(var(--spacing));
+		margin-bottom: calc(var(--spacing));
+	}
+
+	table {
+		margin-bottom: 0;
 	}
 }

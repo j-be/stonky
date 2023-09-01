@@ -1,30 +1,53 @@
 <script lang="ts">
 	import type { EmployeeStockPurchase, RestrictedStockUnits } from '$lib/model';
+	import { exchangeRateStore, stockPriceStore, stocksStore } from '$lib/stores';
 
 	import Stocks from '$lib/components/stocks.svelte';
-	import { fetchForNow } from '$lib/yfinance-api';
 
-	import { onMount } from 'svelte';
-	import { stocksStore } from '$lib/stores';
-
-	let currentPrice: number | null = null;
+	let currentPrice: number = -1;
+	let exchangeRate: number | null = null;
 	let espps: EmployeeStockPurchase[] = [];
 	let rsus: RestrictedStockUnits[] = [];
 
-	onMount(async () => {
-		currentPrice = await fetchForNow('DT');
-	});
-
 	$: espps = $stocksStore.espp.stocks;
 	$: rsus = $stocksStore.rsu.stocks;
+	$: exchangeRate = $exchangeRateStore;
+	$: currentPrice = $stockPriceStore;
 </script>
 
 <h1>Stonky</h1>
 
-{#if currentPrice}
+<article class="overview">
+	<table>
+		<tbody>
+			<tr>
+				<th>Stock price</th>
+				<td>
+					{#if currentPrice > 0}
+						{currentPrice} $
+					{:else}
+						<span aria-busy="true" />
+					{/if}</td
+				>
+			</tr>
+			<tr>
+				<th>Exchange rate</th>
+				<td
+					>{#if exchangeRate}
+						{exchangeRate} <sup>$</sup>/<sub>€</sub>
+					{:else}
+						<span aria-busy="true" />
+					{/if}</td
+				>
+			</tr>
+		</tbody>
+	</table>
+</article>
+
+{#if currentPrice > 0}
 	{#each [espps, rsus] as stocks}
 		{#each stocks as stock, id}
-			<Stocks {id} {stock} {currentPrice} />
+			<Stocks {id} {stock} />
 		{/each}
 	{/each}
 {:else}

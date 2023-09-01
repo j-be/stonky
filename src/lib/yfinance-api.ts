@@ -1,8 +1,6 @@
 // const BASE_URL = 'https://query2.finance.yahoo.com/v8/finance/chart/DT';
 const BASE_URL = 'https://yfinance.great-horned-owl.dedyn.io/v8/finance/chart';
 
-const nowCache = new Map<string, Promise<number>>();
-
 export const fetchForDateString = (dateString: string, symbol: string): Promise<number> => {
 	const key = `adjclose-${symbol}-${dateString}`;
 	const cached = Number(localStorage?.getItem(key));
@@ -18,13 +16,7 @@ export const fetchForDateString = (dateString: string, symbol: string): Promise<
 };
 
 export const fetchForNow = (symbol: string): Promise<number> => {
-	const cached = nowCache.get(symbol);
-	if (cached) {
-		return Promise.resolve(cached);
-	}
-	const prom = fetchForDate(new Date().getTime() / 1000 - 24 * 60 * 60, symbol);
-	nowCache.set(symbol, prom);
-	return prom;
+	return fetchForDate(new Date().getTime() / 1000 - 24 * 60 * 60, symbol);
 };
 
 export const fetchForDate = (epoch: number, symbol: string) =>

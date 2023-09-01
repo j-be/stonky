@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { stockPriceStore } from '$lib/stores';
 	import type { EmployeeStockPurchase, RestrictedStockUnits } from '../model';
 
 	import Espp from './espp.svelte';
@@ -7,7 +8,6 @@
 
 	export let id: number;
 	export let stock: RestrictedStockUnits | EmployeeStockPurchase;
-	export let currentPrice: number;
 
 	let value = 0;
 
@@ -15,7 +15,7 @@
 		value = currentValue.detail.value;
 	};
 
-	$: if (stock.type === 'rsu') value = stock.count * currentPrice;
+	$: if (stock.type === 'rsu') value = stock.count * $stockPriceStore;
 </script>
 
 <details>
@@ -31,9 +31,9 @@
 	</summary>
 
 	{#if stock.type === 'rsu'}
-		<Rsu rsu={stock} {currentPrice} />
+		<Rsu rsu={stock} />
 	{:else if stock.type === 'espp'}
-		<Espp on:currentNet={handleCurrentValue} espp={stock} {currentPrice} />
+		<Espp on:currentNet={handleCurrentValue} espp={stock} />
 	{:else}
 		Unknown Type
 	{/if}
