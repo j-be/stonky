@@ -76,12 +76,13 @@
 		!!firstVestDuration.unit &&
 		!!subsequentVestsDuration.amount &&
 		!!subsequentVestsDuration.unit;
-	$: id !== null && ({
-				count,
-				granted,
-				firstVest: { percentage: firstVestPercentage, duration: firstVestDuration },
-				subsequentVests: { percentage: subsequentVestsPercentage, duration: subsequentVestsDuration },
-			} = $stocksStore.rsu.stocks[id]);
+	$: id !== null &&
+		({
+			count,
+			granted,
+			firstVest: { percentage: firstVestPercentage, duration: firstVestDuration },
+			subsequentVests: { percentage: subsequentVestsPercentage, duration: subsequentVestsDuration },
+		} = $stocksStore.rsu.stocks[id]);
 </script>
 
 <form on:submit|preventDefault={save}>
