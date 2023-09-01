@@ -32,8 +32,8 @@
 	$: discount = espp.count * (endPrice - purchasePrice);
 	$: capitalGains = espp.count * (currentPrice - endPrice);
 	$: currentValue = espp.count * currentPrice;
-	$: isTaxFree = (intervalToDuration({start: new Date(espp.periodEnd), end: new Date()}).years ?? 0) > 4;
-	$: netValue = currentValue - (isTaxFree ? 0 : discount * TAX) - (Math.max(capitalGains, 0) * 0.25)
+	$: isTaxFree = (intervalToDuration({ start: new Date(espp.periodEnd), end: new Date() }).years ?? 0) > 4;
+	$: netValue = currentValue - (isTaxFree ? 0 : discount * TAX) - Math.max(capitalGains, 0) * 0.25;
 	$: dispatch('currentNet', { value: netValue });
 </script>
 
@@ -83,15 +83,15 @@
 					<td><Money value={currentValue} deductTax={false} /></td>
 				</tr>
 				{#if isTaxFree}
-				<tr>
-					<td>Discount (untaxed)</td>
-					<td><Money value={discount} deductTax={false} /></td>
-				</tr>
+					<tr>
+						<td>Discount (untaxed)</td>
+						<td><Money value={discount} deductTax={false} /></td>
+					</tr>
 				{:else}
-				<tr>
-					<td>Discount (taxed)</td>
-					<td><Money value={discount * (1 - TAX)} deductTax={false} /></td>
-				</tr>
+					<tr>
+						<td>Discount (taxed)</td>
+						<td><Money value={discount * (1 - TAX)} deductTax={false} /></td>
+					</tr>
 				{/if}
 				<tr>
 					<td>Capital gains</td>
