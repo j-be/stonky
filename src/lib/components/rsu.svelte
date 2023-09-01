@@ -8,7 +8,7 @@
 	export let rsu: RestrictedStockUnits;
 	export let currentPrice: number;
 
-	let durationMonths: number = 0;
+	let durationMonths = 0;
 	let vests: RsuVest[];
 
 	$: ({ durationMonths, vests } = flattenRsu(rsu));

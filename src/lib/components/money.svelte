@@ -6,7 +6,7 @@
 	import { onMount } from 'svelte';
 
 	export let value: number;
-	export let deductTax: boolean = true;
+	export let deductTax = true;
 
 	let dollarToEuro = 0;
 
