@@ -13,18 +13,6 @@
 
 	let valid = false;
 
-	onMount(() => {
-		if (id === null) {
-			return;
-		}
-		stocksStore.subscribe((stocks) => {
-			if (!stocks.espp.stocks[id!]) {
-				return;
-			}
-			({ periodStart, periodEnd, count } = stocks.espp.stocks[id!]);
-		});
-	});
-
 	const handlePeriodStartChange = () => {
 		if (periodEnd) {
 			return;
@@ -64,6 +52,7 @@
 	};
 
 	$: valid = !!periodStart && !!periodEnd && !!count;
+	$: id !== null && ({ periodStart, periodEnd, count } = $stocksStore.espp.stocks[id]);
 </script>
 
 <form on:submit|preventDefault={save}>

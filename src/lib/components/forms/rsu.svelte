@@ -19,23 +19,6 @@
 
 	let valid = false;
 
-	onMount(() => {
-		if (id === null) {
-			return;
-		}
-		stocksStore.subscribe((stocks) => {
-			if (!stocks.rsu.stocks[id!]) {
-				return;
-			}
-			({
-				count,
-				granted,
-				firstVest: { percentage: firstVestPercentage, duration: firstVestDuration },
-				subsequentVests: { percentage: subsequentVestsPercentage, duration: subsequentVestsDuration },
-			} = stocks.rsu.stocks[id!]);
-		});
-	});
-
 	const save = () => {
 		if (!valid) {
 			return;
@@ -93,6 +76,12 @@
 		!!firstVestDuration.unit &&
 		!!subsequentVestsDuration.amount &&
 		!!subsequentVestsDuration.unit;
+	$: id !== null && ({
+				count,
+				granted,
+				firstVest: { percentage: firstVestPercentage, duration: firstVestDuration },
+				subsequentVests: { percentage: subsequentVestsPercentage, duration: subsequentVestsDuration },
+			} = $stocksStore.rsu.stocks[id]);
 </script>
 
 <form on:submit|preventDefault={save}>

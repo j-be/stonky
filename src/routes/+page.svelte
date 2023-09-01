@@ -11,13 +11,12 @@
 	let espps: EmployeeStockPurchase[] = [];
 	let rsus: RestrictedStockUnits[] = [];
 
-	stocksStore.subscribe((stocksFromStore) => {
-		({ espps, rsus } = { espps: stocksFromStore.espp.stocks, rsus: stocksFromStore.rsu.stocks });
-	});
-
 	onMount(async () => {
 		currentPrice = await fetchForNow('DT');
 	});
+
+	$: espps = $stocksStore.espp.stocks;
+	$: rsus = $stocksStore.rsu.stocks;
 </script>
 
 <h1>Stonky</h1>
