@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { EmployeeStockPurchase, RestrictedStockUnits } from '$lib/model';
-	import { exchangeRateStore, stockPriceStore, stocksStore } from '$lib/stores';
+	import { exchangeRateStore, stockPriceStore, stocksStore, taxStore } from '$lib/stores';
 
 	import Stocks from '$lib/components/stocks.svelte';
 
@@ -13,6 +13,7 @@
 	$: rsus = $stocksStore.rsu.stocks;
 	$: exchangeRate = $exchangeRateStore;
 	$: currentPrice = $stockPriceStore;
+	$: tax = $taxStore;
 </script>
 
 <h1>Stonky</h1>
@@ -39,6 +40,10 @@
 						<span aria-busy="true" />
 					{/if}</td
 				>
+			</tr>
+			<tr>
+				<th>Income tax</th>
+				<td>{tax * 100} %</td>
 			</tr>
 		</tbody>
 	</table>

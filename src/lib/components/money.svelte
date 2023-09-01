@@ -1,8 +1,6 @@
 <script lang="ts">
 	import FormattedNumber from './formattedNumber.svelte';
-
-	import { TAX } from '$lib/constants';
-	import { exchangeRateStore } from '$lib/stores';
+	import { exchangeRateStore, taxStore } from '$lib/stores';
 
 	export let value: number;
 	export let deductTax = true;
@@ -13,7 +11,7 @@
 </script>
 
 {#if dollarToEuro}
-	<FormattedNumber value={value * (deductTax ? 1 - TAX : 1) * dollarToEuro} unit="€" />
+	<FormattedNumber value={value * (deductTax ? 1 - $taxStore : 1) * dollarToEuro} unit="€" />
 {:else}
 	???
 {/if}
