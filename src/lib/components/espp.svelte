@@ -6,9 +6,9 @@
 	import { formatNumber } from '$lib/utils';
 	import { TAX } from '$lib/constants';
 	import { intervalToDuration } from 'date-fns';
+	import { stockPriceStore } from '$lib/stores';
 
 	export let espp: EmployeeStockPurchase;
-	export let currentPrice: number;
 
 	let startPrice = 0;
 	let endPrice = 0;
@@ -30,8 +30,8 @@
 	$: purchasePrice = Math.min(startPrice, endPrice) * 0.85;
 	$: paid = espp.count * purchasePrice;
 	$: discount = espp.count * (endPrice - purchasePrice);
-	$: capitalGains = espp.count * (currentPrice - endPrice);
-	$: currentValue = espp.count * currentPrice;
+	$: capitalGains = espp.count * ($stockPriceStore - endPrice);
+	$: currentValue = espp.count * $stockPriceStore;
 	$: isTaxFree = (intervalToDuration({ start: new Date(espp.periodEnd), end: new Date() }).years ?? 0) > 4;
 	$: netValue = currentValue - (isTaxFree ? 0 : discount * TAX) - Math.max(capitalGains, 0) * 0.25;
 	$: dispatch('currentNet', { value: netValue });

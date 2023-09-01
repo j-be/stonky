@@ -1,5 +1,6 @@
 import type { EmployeeStockPurchase, RestrictedStockUnits } from './model';
-import { writable, type Writable } from 'svelte/store';
+import { readable, writable, type Writable } from 'svelte/store';
+import { fetchForNow } from './yfinance-api';
 
 const createBrowserStore = <T>(name: string, initialValue: T) => {
 	const store = writable<T>(JSON.parse(localStorage.getItem(name) ?? 'null') ?? initialValue);
@@ -36,3 +37,11 @@ export const insertOrUpdate = <T>(current: T[], entity: T, id: number | null = n
 
 	return newState;
 };
+
+export const exchangeRateStore = readable<number | null>(null, function start(set) {
+	fetchForNow('EUR=X').then(set);
+});
+
+export const stockPriceStore = readable(-1, function start(set) {
+	fetchForNow('DT').then(set);
+});

@@ -2,18 +2,19 @@
 	import FormattedNumber from './formattedNumber.svelte';
 
 	import { TAX } from '$lib/constants';
-	import { fetchForNow } from '$lib/yfinance-api';
-	import { onMount } from 'svelte';
+	import { exchangeRateStore } from '$lib/stores';
 
 	export let value: number;
 	export let deductTax = true;
 
-	let dollarToEuro = 0;
+	let dollarToEuro: number | null = null;
 
-	onMount(async () => {
-		dollarToEuro = await fetchForNow('EUR=X');
-	});
+	$: dollarToEuro = $exchangeRateStore;
 </script>
 
-<FormattedNumber value={value * (deductTax ? 1 - TAX : 1) * dollarToEuro} unit="€" />
+{#if dollarToEuro}
+	<FormattedNumber value={value * (deductTax ? 1 - TAX : 1) * dollarToEuro} unit="€" />
+{:else}
+	???
+{/if}
 <small class="muted">(<FormattedNumber {value} unit="$" />)</small>
