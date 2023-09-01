@@ -3,7 +3,6 @@
 	import { addDays, addMonths, format } from 'date-fns';
 	import ActionButtons from './actionButtons.svelte';
 	import { goto } from '$app/navigation';
-	import { onMount } from 'svelte';
 
 	export let id: number | null = null;
 
@@ -52,7 +51,7 @@
 	};
 
 	$: valid = !!periodStart && !!periodEnd && !!count;
-	$: id !== null && ({ periodStart, periodEnd, count } = $stocksStore.espp.stocks[id]);
+	$: id !== null && $stocksStore.espp.stocks[id] && ({ periodStart, periodEnd, count } = $stocksStore.espp.stocks[id]);
 </script>
 
 <form on:submit|preventDefault={save}>
