@@ -70,5 +70,5 @@
 		</label>
 	</div>
 
-	<ActionButtons {valid} {reset} />
+	<ActionButtons {valid} secondaryButtonLabel="Reset" on:secondaryClick={reset} />
 </form>
