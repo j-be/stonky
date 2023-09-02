@@ -51,4 +51,9 @@ export const stockPriceStore = readable(-1, function start(set) {
 	fetchForNow('DT').then(set);
 });
 
-export const taxStore = createPersistentStore('tax', 0.48);
+interface Settings {
+	incomeTax: number;
+}
+
+export const settingsStore = createPersistentStore<Settings>('settings', { incomeTax: 0.48 });
+export const taxStore = derived(settingsStore, ($settingsStore) => $settingsStore.incomeTax);
