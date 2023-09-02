@@ -45,7 +45,7 @@ const getDate = (startDate: string, i: number, duration: Duration) => {
 };
 
 export const formatNumber = (value: number, digits = 2) =>
-	`${value.toLocaleString(undefined, {
+	value.toLocaleString(undefined, {
 		minimumFractionDigits: digits,
 		maximumFractionDigits: digits,
-	})}`;
+	});
