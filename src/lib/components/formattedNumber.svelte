@@ -6,4 +6,8 @@
 	export let unit = '';
 </script>
 
-{formatNumber(value, digits)}{unit ? ' ' + unit : ''}
+{#if isNaN(value)}
+	???
+{:else}
+	{formatNumber(value, digits)}{unit ? ' ' + unit : ''}
+{/if}
