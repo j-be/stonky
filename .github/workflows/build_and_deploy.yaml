@@ -2,8 +2,8 @@ name: Build and Push
 
 on:
   push:
-    tags:
-    - '[0-9]+.[0-9]+.[0-9]+'
+    branches:
+    - main
 
 jobs:
   buildx:
@@ -22,11 +22,18 @@ jobs:
       with:
         node-version: '18'
 
-    - name: Install
-      run: npm install
-
     - name: Build
-      run: npm run build
+      run: |
+        npm install
+        npm run lint
+        npm run build
+
+    # Tag the release
+    - name: Bump version and push tag
+      uses: anothrNick/github-tag-action@1.67.0
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        WITH_V: false
 
     # Setup Buildx
     - name: Set up QEMU
