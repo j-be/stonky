@@ -115,3 +115,29 @@ body div.vest-row {
 		margin-bottom: 0;
 	}
 }
+
+.icon::after {
+	background-color: currentColor;
+	content: '';
+	padding: 0 0.5em;
+	margin: 0 0.125rem;
+	-webkit-mask-repeat: no-repeat;
+	mask-repeat: no-repeat;
+	-webkit-mask-position: center;
+	mask-position: center;
+	clip-path: padding-box;
+}
+
+.icon.settings::after {
+	-webkit-mask-image: url('$lib/assets/gear.svg');
+	mask-image: url('$lib/assets/gear.svg');
+}
+
+a[target='_blank'] {
+	font-weight: bold;
+	&::after {
+		@extend .icon;
+		-webkit-mask-image: url('$lib/assets/arrow-up-right-from-square.svg');
+		mask-image: url('$lib/assets/arrow-up-right-from-square.svg');
+	}
+}

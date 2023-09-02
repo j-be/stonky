@@ -37,7 +37,10 @@
 			</tr>
 			<tr>
 				<th>Income tax</th>
-				<td>{tax * 100} %</td>
+				<td>
+					{tax * 100} %
+					<a href="/settings" class="icon settings">&#8288;</a>
+				</td>
 			</tr>
 		</tbody>
 	</table>
