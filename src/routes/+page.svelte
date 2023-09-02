@@ -46,14 +46,10 @@
 	</table>
 </article>
 
-{#if currentPrice > 0}
-	{#each [$esppStore, $rsuStore] as stocks}
-		{#each stocks as stock, id}
-			<Stocks {id} {stock} />
-		{/each}
+{#each [$esppStore, $rsuStore] as stocks}
+	{#each stocks as stock, id}
+		<Stocks {id} {stock} />
 	{/each}
-{:else}
-	Loading current price
-{/if}
+{/each}
 
 <a href="/add" role="button"><b>+</b></a>

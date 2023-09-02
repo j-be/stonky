@@ -9,14 +9,8 @@
 
 	export let espp: EmployeeStockPurchase;
 
-	let startPrice = 0;
-	let endPrice = 0;
-
-	let purchasePrice = 0;
-	let discount = 0;
-	let capitalGains = 0;
-	let currentValue = 0;
-	let netValue = 0;
+	let startPrice = NaN;
+	let endPrice = NaN;
 
 	const dispatch = createEventDispatcher();
 

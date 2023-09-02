@@ -5,14 +5,14 @@
 	export let value: number;
 	export let deductTax = true;
 
-	let dollarToEuro: number | null = null;
-
 	$: dollarToEuro = $exchangeRateStore;
 </script>
 
-{#if dollarToEuro}
-	<FormattedNumber value={value * (deductTax ? 1 - $taxStore : 1) * dollarToEuro} unit="€" />
-{:else}
+{#if isNaN(dollarToEuro) || isNaN(value)}
 	???
+{:else}
+	<FormattedNumber value={value * (deductTax ? 1 - $taxStore : 1) * dollarToEuro} unit="€" />
 {/if}
-<small class="muted">(<FormattedNumber {value} unit="$" />)</small>
+{#if !isNaN(value)}
+	<small class="muted">(<FormattedNumber {value} unit="$" />)</small>
+{/if}

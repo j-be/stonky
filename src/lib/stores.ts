@@ -43,11 +43,11 @@ export const insertOrUpdate = <T>(current: T[], entity: T, id: number | null = n
 	return newState;
 };
 
-export const exchangeRateStore = readable<number | null>(null, function start(set) {
+export const exchangeRateStore = readable(NaN, function start(set) {
 	fetchForNow('EUR=X').then(set);
 });
 
-export const stockPriceStore = readable(-1, function start(set) {
+export const stockPriceStore = readable(NaN, function start(set) {
 	fetchForNow('DT').then(set);
 });
 

@@ -9,7 +9,7 @@
 	export let id: number;
 	export let stock: RestrictedStockUnits | EmployeeStockPurchase;
 
-	let value = 0;
+	let value = NaN;
 
 	const handleCurrentValue = (currentValue: CustomEvent<{ value: number }>) => {
 		value = currentValue.detail.value;
