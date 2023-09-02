@@ -2,18 +2,17 @@ import { addDays, addHours, format } from 'date-fns';
 // const BASE_URL = 'https://query2.finance.yahoo.com/v8/finance/chart/DT';
 const BASE_URL = 'https://yfinance.great-horned-owl.dedyn.io/v8/finance/chart';
 
-export const fetchForDateString = (dateString: string, symbol: string): Promise<number> => {
+export const fetchForDateString = async (dateString: string, symbol: string): Promise<number> => {
 	const key = `adjclose-${symbol}-${dateString}`;
 	const cached = Number(localStorage?.getItem(key));
 	if (cached) {
 		return Promise.resolve(cached);
 	}
-	return fetchForDate(new Date(dateString), symbol).then((fetched) => {
-		if (fetched && localStorage) {
-			localStorage?.setItem(key, String(fetched));
-		}
-		return fetched;
-	});
+	const fetched = await fetchForDate(new Date(dateString), symbol);
+	if (fetched && localStorage) {
+		localStorage?.setItem(key, String(fetched));
+	}
+	return fetched;
 };
 
 export const fetchForNow = (symbol: string): Promise<number> => {
