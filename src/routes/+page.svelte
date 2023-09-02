@@ -1,16 +1,10 @@
 <script lang="ts">
-	import type { EmployeeStockPurchase, RestrictedStockUnits } from '$lib/model';
-	import { exchangeRateStore, stockPriceStore, stocksStore, taxStore } from '$lib/stores';
-
+	import { esppStore, exchangeRateStore, rsuStore, stockPriceStore, taxStore } from '$lib/stores';
 	import Stocks from '$lib/components/stocks.svelte';
 
 	let currentPrice = -1;
 	let exchangeRate: number | null = null;
-	let espps: EmployeeStockPurchase[] = [];
-	let rsus: RestrictedStockUnits[] = [];
 
-	$: espps = $stocksStore.espp.stocks;
-	$: rsus = $stocksStore.rsu.stocks;
 	$: exchangeRate = $exchangeRateStore;
 	$: currentPrice = $stockPriceStore;
 	$: tax = $taxStore;
@@ -50,7 +44,7 @@
 </article>
 
 {#if currentPrice > 0}
-	{#each [espps, rsus] as stocks}
+	{#each [$esppStore, $rsuStore] as stocks}
 		{#each stocks as stock, id}
 			<Stocks {id} {stock} />
 		{/each}

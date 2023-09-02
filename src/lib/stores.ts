@@ -1,5 +1,5 @@
 import type { EmployeeStockPurchase, RestrictedStockUnits } from './model';
-import { readable, writable, type Writable } from 'svelte/store';
+import { derived, readable, writable, type Writable } from 'svelte/store';
 import { fetchForNow } from './yfinance-api';
 
 const createBrowserStore = <T>(name: string, initialValue: T) => {
@@ -28,6 +28,8 @@ export const stocksStore: Writable<StocksStore> = createPersistentStore('stocks'
 	espp: { stocks: [] },
 	rsu: { stocks: [] },
 });
+export const esppStore = derived(stocksStore, ($stocksStore) => $stocksStore.espp.stocks);
+export const rsuStore = derived(stocksStore, ($stocksStore) => $stocksStore.rsu.stocks);
 
 export const insertOrUpdate = <T>(current: T[], entity: T, id: number | null = null) => {
 	const newState = [...current];
