@@ -1,3 +1,4 @@
+import { addDays, addHours, format } from 'date-fns';
 // const BASE_URL = 'https://query2.finance.yahoo.com/v8/finance/chart/DT';
 const BASE_URL = 'https://yfinance.great-horned-owl.dedyn.io/v8/finance/chart';
 
@@ -7,7 +8,7 @@ export const fetchForDateString = (dateString: string, symbol: string): Promise<
 	if (cached) {
 		return Promise.resolve(cached);
 	}
-	return fetchForDate(new Date(dateString).getTime() / 1000, symbol).then((fetched) => {
+	return fetchForDate(new Date(dateString), symbol).then((fetched) => {
 		if (fetched && localStorage) {
 			localStorage?.setItem(key, String(fetched));
 		}
@@ -16,18 +17,19 @@ export const fetchForDateString = (dateString: string, symbol: string): Promise<
 };
 
 export const fetchForNow = (symbol: string): Promise<number> => {
-	return fetchForDate(new Date().getTime() / 1000 - 24 * 60 * 60, symbol);
+	return fetchForDate(addDays(new Date(), -1), symbol);
 };
 
-export const fetchForDate = (epoch: number, symbol: string) =>
-	fetchForPeriod(epoch + 4 * 60 * 60, epoch + 28 * 60 * 60, symbol);
+const toEpoch = (date: Date): number => Math.floor(date.getTime() / 1000);
 
-const fetchForPeriod = (epochStart: number, epochEnd: number, symbol: string): Promise<number> =>
-	fetch(
-		`${BASE_URL}/${symbol}?period1=${Math.floor(epochStart)}&period2=${Math.ceil(
-			epochEnd,
-		)}&interval=1d&includePrePost=False&events=div%2Csplits%2CcapitalGains`,
+const fetchForDate = (date: Date, symbol: string) => {
+	const epochStart = toEpoch(addHours(date, 4));
+	const epochEnd = toEpoch(addDays(date, 1));
+	return fetch(
+		`${BASE_URL}/${symbol}?period1=${epochStart}&period2=${epochEnd}
+		&interval=1d&includePrePost=False&events=div%2Csplits%2CcapitalGains`,
 	)
 		.then((response) => response.json())
 		.then((data) => data.chart.result[0].indicators.adjclose[0].adjclose)
 		.then((adjclose) => adjclose[adjclose.length - 1]);
+};
