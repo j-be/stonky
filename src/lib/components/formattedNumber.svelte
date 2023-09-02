@@ -4,8 +4,6 @@
 	export let value: number;
 	export let digits = 2;
 	export let unit = '';
-
-	$: formatted = `${formatNumber(value, digits)}${unit ? ' ' + unit : ''}`;
 </script>
 
-{formatted}
+{formatNumber(value, digits)}{unit ? ' ' + unit : ''}
