@@ -2,12 +2,11 @@
 	import { esppStore, exchangeRateStore, rsuStore, stockPriceStore, taxStore } from '$lib/stores';
 	import Stocks from '$lib/components/stocks.svelte';
 
-	let currentPrice = -1;
-	let exchangeRate: number | null = null;
+	let currentPrice = NaN;
+	let exchangeRate = NaN;
 
 	$: exchangeRate = $exchangeRateStore;
 	$: currentPrice = $stockPriceStore;
-	$: tax = $taxStore;
 </script>
 
 <h1>Stonky</h1>
@@ -18,27 +17,27 @@
 			<tr>
 				<th>Stock price</th>
 				<td>
-					{#if currentPrice > 0}
+					{#if !isNaN(currentPrice)}
 						{currentPrice} $
 					{:else}
 						<span aria-busy="true" />
-					{/if}</td
-				>
+					{/if}
+				</td>
 			</tr>
 			<tr>
 				<th>Exchange rate</th>
-				<td
-					>{#if exchangeRate}
+				<td>
+					{#if !isNaN(exchangeRate)}
 						{exchangeRate} <sup>$</sup>/<sub>€</sub>
 					{:else}
 						<span aria-busy="true" />
-					{/if}</td
-				>
+					{/if}
+				</td>
 			</tr>
 			<tr>
 				<th>Income tax</th>
 				<td>
-					{tax * 100} %
+					{$taxStore * 100} %
 					<a href="/settings" class="icon settings">&#8288;</a>
 				</td>
 			</tr>
