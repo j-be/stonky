@@ -50,7 +50,7 @@
 				<tr>
 					<td>Net if sold now</td>
 					<td>
-						<em data-tooltip="CurrentValue - TaxOnDiscount - CapitalGainTax">
+						<em data-tooltip={`CurrentValue - TaxOnDiscount ${capitalGains > 0 ? '- CapitalGainTax' : ''}`}>
 							<Money value={netValue} deductTax={false} />
 						</em>
 					</td>
