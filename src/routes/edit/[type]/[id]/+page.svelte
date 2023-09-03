@@ -22,8 +22,6 @@
 	};
 </script>
 
-<h1>Edit {data.type} {data.id}</h1>
-
 {#if type === 'rsu'}
 	<Rsu {id} />
 {:else}

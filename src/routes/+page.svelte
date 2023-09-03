@@ -9,8 +9,6 @@
 	$: currentPrice = $stockPriceStore;
 </script>
 
-<h1>Stonky &#129297;</h1>
-
 <article class="overview">
 	<table>
 		<tbody>

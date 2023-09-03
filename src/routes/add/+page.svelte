@@ -6,8 +6,6 @@
 	let stockType: StockType = 'espp';
 </script>
 
-<h1>Add</h1>
-
 <fieldset>
 	<legend>Type</legend>
 	{#each ['espp', 'rsu'] as type}

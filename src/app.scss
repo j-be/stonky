@@ -1,3 +1,4 @@
+@use 'sass:map';
 @import '@picocss/pico/scss/pico'; /* To import only what you need from Pico [check the documentaion](https://picocss.com/docs/customization.html) */
 /* Write your global styles here, in SCSS syntax. Variables and mixins from the src/variables.scss file are available here without importing */
 
@@ -150,5 +151,39 @@ a[target='_blank'] {
 		@extend .icon;
 		-webkit-mask-image: url('$lib/assets/arrow-up-right-from-square.svg');
 		mask-image: url('$lib/assets/arrow-up-right-from-square.svg');
+	}
+}
+
+body div:first-child > main {
+	padding: 0;
+	padding-top: calc(var(--spacing) * 6);
+}
+
+article {
+	margin-top: 0;
+}
+
+nav {
+	position: fixed;
+	width: 100%;
+	margin: -8px;
+	padding: calc(var(--spacing));
+	background-color: var(--card-background-color);
+	box-shadow: 0px -10px 20px 0px black;
+
+	@media screen and (max-width: map.get($breakpoints, 'small')) {
+		padding: calc(var(--spacing) / 2);
+	}
+
+	div.container {
+		margin: auto;
+	}
+
+	h1 {
+		margin: 0;
+		@media screen and (max-width: map.get($breakpoints, 'small')) {
+			width: 100%;
+			text-align: center;
+		}
 	}
 }
