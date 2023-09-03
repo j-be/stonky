@@ -26,8 +26,8 @@ export const fetchForDateString = async (dateString: string, symbol: string): Pr
 };
 
 export const fetchForNow = async (symbol: string): Promise<number> => {
-	const yesterday = addDays(new Date(), -1);
-	const date = format(yesterday, 'yyyy-MM-dd');
+	const today = new Date();
+	const date = format(today, 'yyyy-MM-dd');
 	const [read, write] = storageReadWrite<{ date: string; value: number }>(`currentPrice-${symbol}`);
 
 	const cached = read();
@@ -35,7 +35,7 @@ export const fetchForNow = async (symbol: string): Promise<number> => {
 		return cached.value;
 	}
 
-	const value = await fetchForDate(yesterday, symbol);
+	const value = await fetchForDates(addDays(today, -7), today, symbol);
 	write({ date, value });
 	return value;
 };
@@ -43,8 +43,12 @@ export const fetchForNow = async (symbol: string): Promise<number> => {
 const toEpoch = (date: Date): number => Math.floor(date.getTime() / 1000);
 
 const fetchForDate = (date: Date, symbol: string) => {
-	const epochStart = toEpoch(addHours(date, 4));
-	const epochEnd = toEpoch(addDays(date, 1));
+	return fetchForDates(date, addDays(date, 1), symbol);
+};
+
+const fetchForDates = (start: Date, end: Date, symbol: string) => {
+	const epochStart = toEpoch(addHours(start, 4));
+	const epochEnd = toEpoch(addHours(end, 4));
 	return fetch(
 		`${BASE_URL}/${symbol}?period1=${epochStart}&period2=${epochEnd}
 		&interval=1d&includePrePost=False&events=div%2Csplits%2CcapitalGains`,
