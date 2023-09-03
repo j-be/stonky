@@ -21,8 +21,6 @@
 	$: valid = incomeTaxPercents !== null;
 </script>
 
-<h1>Settings</h1>
-
 <Loading {loading}>
 	<form on:submit|preventDefault={save}>
 		<label for="income_tax">
