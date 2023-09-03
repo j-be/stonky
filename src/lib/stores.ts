@@ -2,14 +2,24 @@ import type { EmployeeStockPurchase, RestrictedStockUnits } from './model';
 import { derived, readable, writable, type Writable } from 'svelte/store';
 import { fetchForNow } from './yfinance-api';
 
+/*
+ * Types
+ */
+interface StocksStore {
+	espp: { stocks: EmployeeStockPurchase[] };
+	rsu: { stocks: RestrictedStockUnits[] };
+}
+
+interface Settings {
+	incomeTax: number;
+}
+
+/*
+ * Helpers
+ */
 const createBrowserStore = <T>(name: string, initialValue: T) => {
 	const store = writable<T>(JSON.parse(localStorage.getItem(name) ?? 'null') ?? initialValue);
-
-	// Store the token in LocalStorage whenever it´s updated
-	store.subscribe((val) => {
-		localStorage?.setItem(name, JSON.stringify(val));
-	});
-
+	store.subscribe((val) => localStorage?.setItem(name, JSON.stringify(val)));
 	return store;
 };
 
@@ -18,18 +28,6 @@ const createNodeStore = <T>(initialValue: T) => writable<T>(initialValue);
 
 const createPersistentStore = <T>(name: string, initialValue: T) =>
 	typeof localStorage === 'undefined' ? createNodeStore(initialValue) : createBrowserStore(name, initialValue);
-
-interface StocksStore {
-	espp: { stocks: EmployeeStockPurchase[] };
-	rsu: { stocks: RestrictedStockUnits[] };
-}
-
-export const stocksStore: Writable<StocksStore> = createPersistentStore('stocks', {
-	espp: { stocks: [] },
-	rsu: { stocks: [] },
-});
-export const esppStore = derived(stocksStore, ($stocksStore) => $stocksStore.espp.stocks);
-export const rsuStore = derived(stocksStore, ($stocksStore) => $stocksStore.rsu.stocks);
 
 export const insertOrUpdate = <T>(current: T[], entity: T, id: number | null = null) => {
 	const newState = [...current];
@@ -43,6 +41,16 @@ export const insertOrUpdate = <T>(current: T[], entity: T, id: number | null = n
 	return newState;
 };
 
+/*
+ * Stores
+ */
+export const stocksStore: Writable<StocksStore> = createPersistentStore('stocks', {
+	espp: { stocks: [] },
+	rsu: { stocks: [] },
+});
+export const esppStore = derived(stocksStore, ($stocksStore) => $stocksStore.espp.stocks);
+export const rsuStore = derived(stocksStore, ($stocksStore) => $stocksStore.rsu.stocks);
+
 export const exchangeRateStore = readable(NaN, function start(set) {
 	fetchForNow('EUR=X').then(set);
 });
@@ -50,10 +58,6 @@ export const exchangeRateStore = readable(NaN, function start(set) {
 export const stockPriceStore = readable(NaN, function start(set) {
 	fetchForNow('DT').then(set);
 });
-
-interface Settings {
-	incomeTax: number;
-}
 
 export const settingsStore = createPersistentStore<Settings>('settings', { incomeTax: 0.48 });
 export const taxStore = derived(settingsStore, ($settingsStore) => $settingsStore.incomeTax);
