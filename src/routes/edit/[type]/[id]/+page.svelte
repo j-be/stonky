@@ -3,7 +3,6 @@
 	import Espp from '$lib/components/forms/espp.svelte';
 	import Rsu from '$lib/components/forms/rsu.svelte';
 	import { stocksStore } from '$lib/stores';
-	import { goto } from '$app/navigation';
 
 	export let data: { id: number; type: StockType };
 
@@ -18,7 +17,7 @@
 			},
 		}));
 
-		goto('/', { replaceState: true });
+		history.back();
 	};
 </script>
 

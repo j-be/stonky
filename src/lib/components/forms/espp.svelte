@@ -3,7 +3,6 @@
 	import { insertOrUpdate, stocksStore } from '$lib/stores';
 	import { addDays, addMonths, format } from 'date-fns';
 	import ActionButtons from './actionButtons.svelte';
-	import { goto } from '$app/navigation';
 	import { onMount } from 'svelte';
 
 	export let id: number | null = null;
@@ -50,7 +49,7 @@
 			},
 		}));
 
-		goto('/', { replaceState: true });
+		history.back();
 	};
 
 	$: valid = !!periodStart && !!periodEnd && !!count;
