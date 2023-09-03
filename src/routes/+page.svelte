@@ -49,4 +49,4 @@
 	{/each}
 {/each}
 
-<a href="/add" role="button"><b>+</b></a>
+<a href="/add" role="button"><span class="icon add" />&nbsp;Add stocks</a>

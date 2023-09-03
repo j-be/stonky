@@ -51,6 +51,7 @@ details {
 		}
 
 		> .title {
+			display: flex;
 			flex-grow: 1;
 			gap: calc(var(--spacing));
 		}
@@ -143,6 +144,16 @@ body div.vest-row {
 .icon.settings::after {
 	-webkit-mask-image: url('$lib/assets/gear.svg');
 	mask-image: url('$lib/assets/gear.svg');
+}
+
+.icon.add::after {
+	-webkit-mask-image: url('$lib/assets/plus.svg');
+	mask-image: url('$lib/assets/plus.svg');
+}
+
+.icon.edit::after {
+	-webkit-mask-image: url('$lib/assets/pen-to-square.svg');
+	mask-image: url('$lib/assets/pen-to-square.svg');
 }
 
 a[target='_blank'] {
