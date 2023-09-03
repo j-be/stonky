@@ -21,7 +21,7 @@
 <details>
 	<summary>
 		<div class="title">
-			<a href="/edit/{stock.type}/{id}" class="outline">Edit</a>
+			<a href="/edit/{stock.type}/{id}" class="icon edit">&#8288;</a>
 			<span>
 				<span class="uppercase">{stock.type}</span>
 				{stock.count}
