@@ -13,7 +13,7 @@
 	{#each ['espp', 'rsu'] as type}
 		<label>
 			<input type="radio" name="type" value={type} bind:group={stockType} />
-			{type}
+			<span class="uppercase">{type}</span>
 		</label>
 	{/each}
 </fieldset>
