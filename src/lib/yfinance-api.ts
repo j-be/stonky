@@ -1,5 +1,5 @@
 import { addDays, addHours, format } from 'date-fns';
-import { YFinanceDB } from './db';
+import { YFinanceDB } from './persistence/db';
 
 // const BASE_URL = 'https://query2.finance.yahoo.com/v8/finance/chart/DT';
 const BASE_URL = 'https://yfinance.great-horned-owl.dedyn.io/v8/finance/chart';

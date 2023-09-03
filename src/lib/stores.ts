@@ -1,6 +1,7 @@
 import type { EmployeeStockPurchase, RestrictedStockUnits } from './model';
 import { derived, readable, writable, type Writable } from 'svelte/store';
 import { fetchForNow } from './yfinance-api';
+import { storageReadWrite } from './persistence/storage';
 
 /*
  * Types
@@ -17,17 +18,12 @@ interface Settings {
 /*
  * Helpers
  */
-const createBrowserStore = <T>(name: string, initialValue: T) => {
-	const store = writable<T>(JSON.parse(localStorage.getItem(name) ?? 'null') ?? initialValue);
-	store.subscribe((val) => localStorage?.setItem(name, JSON.stringify(val)));
+const createPersistentStore = <T>(name: string, initialValue: T) => {
+	const [read, write] = storageReadWrite<T>(name);
+	const store = writable<T>(read() ?? initialValue);
+	store.subscribe((val) => write(val));
 	return store;
 };
-
-// just enough to not crash in Node
-const createNodeStore = <T>(initialValue: T) => writable<T>(initialValue);
-
-const createPersistentStore = <T>(name: string, initialValue: T) =>
-	typeof localStorage === 'undefined' ? createNodeStore(initialValue) : createBrowserStore(name, initialValue);
 
 export const insertOrUpdate = <T>(current: T[], entity: T, id: number | null = null) => {
 	const newState = [...current];
