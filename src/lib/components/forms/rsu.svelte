@@ -3,7 +3,6 @@
 	import Loading from '../loading.svelte';
 	import { insertOrUpdate, stocksStore } from '$lib/stores';
 	import ActionButtons from './actionButtons.svelte';
-	import { goto } from '$app/navigation';
 	import VestingPeriod from './vestingPeriod.svelte';
 	import { onMount } from 'svelte';
 
@@ -60,7 +59,7 @@
 			},
 		}));
 
-		goto('/', { replaceState: true });
+		history.back();
 	};
 
 	const firstVestDurationChanged = (event: CustomEvent<Duration>) => {
