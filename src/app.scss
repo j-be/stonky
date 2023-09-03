@@ -5,6 +5,10 @@
 	color: var(--secondary);
 }
 
+.uppercase {
+	text-transform: uppercase;
+}
+
 details,
 summary {
 	border-radius: var(--border-radius);
@@ -31,15 +35,22 @@ details {
 	}
 
 	> summary {
+		display: flex;
+		flex-direction: row;
 		background-color: var(--card-sectionning-background-color);
 		padding: calc(var(--spacing));
+		white-space: nowrap;
 
 		&:focus:not([role='button']) {
 			color: var(--accordion-close-summary-color);
 		}
 
+		&::after {
+			flex-shrink: 0;
+		}
+
 		> .title {
-			display: flex;
+			flex-grow: 1;
 			gap: calc(var(--spacing));
 		}
 	}

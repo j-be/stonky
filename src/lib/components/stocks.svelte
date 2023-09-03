@@ -19,15 +19,15 @@
 </script>
 
 <details>
-	<summary style="display: flex; flex-direction: row;">
-		<div class="title" style="flex-grow: 1;">
+	<summary>
+		<div class="title">
 			<a href="/edit/{stock.type}/{id}" class="outline">Edit</a>
 			<span>
-				<span style="text-transform: uppercase">{stock.type}</span>
+				<span class="uppercase">{stock.type}</span>
 				{stock.count}
 			</span>
 		</div>
-		<div style="white-space: nowrap;"><Money {value} deductTax={stock.type == 'rsu'} /></div>
+		<div><Money {value} deductTax={stock.type == 'rsu'} /></div>
 	</summary>
 
 	{#if stock.type === 'rsu'}
