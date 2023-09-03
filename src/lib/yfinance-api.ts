@@ -1,5 +1,6 @@
 import { addDays, addHours, format } from 'date-fns';
 import { YFinanceDB } from './persistence/db';
+import { storageReadWrite } from './persistence/storage';
 
 // const BASE_URL = 'https://query2.finance.yahoo.com/v8/finance/chart/DT';
 const BASE_URL = 'https://yfinance.great-horned-owl.dedyn.io/v8/finance/chart';
@@ -14,7 +15,7 @@ export const fetchForDateString = async (dateString: string, symbol: string): Pr
 
 	const cached = await db?.get({ date: dateString, symbol });
 	if (cached) {
-		return Promise.resolve(cached);
+		return cached;
 	}
 
 	const fetched = await fetchForDate(new Date(dateString), symbol);
@@ -24,8 +25,19 @@ export const fetchForDateString = async (dateString: string, symbol: string): Pr
 	return fetched;
 };
 
-export const fetchForNow = (symbol: string): Promise<number> => {
-	return fetchForDateString(format(addDays(new Date(), -1), 'yyyy-MM-dd'), symbol);
+export const fetchForNow = async (symbol: string): Promise<number> => {
+	const yesterday = addDays(new Date(), -1);
+	const date = format(yesterday, 'yyyy-MM-dd');
+	const [read, write] = storageReadWrite<{ date: string; value: number }>(`currentPrice-${symbol}`);
+
+	const cached = read();
+	if (cached?.date === date) {
+		return cached.value;
+	}
+
+	const value = await fetchForDate(yesterday, symbol);
+	write({ date, value });
+	return value;
 };
 
 const toEpoch = (date: Date): number => Math.floor(date.getTime() / 1000);
