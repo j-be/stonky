@@ -1,16 +1,10 @@
 <script lang="ts">
-	import { createEventDispatcher } from 'svelte';
+	import { goto } from '$app/navigation';
 
 	export let valid = true;
-	export let secondaryButtonLabel: string;
-
-	const dispatch = createEventDispatcher();
-	const onSecondaryClickHandler = () => dispatch('secondaryClick');
 </script>
 
 <div class="grid">
-	<button type="reset" class="secondary" on:click|preventDefault={onSecondaryClickHandler}>
-		{secondaryButtonLabel}
-	</button>
+	<button class="secondary" on:click={() => goto('/', { replaceState: true })}>Cancel</button>
 	<button type="submit" disabled={!valid}>Save</button>
 </div>

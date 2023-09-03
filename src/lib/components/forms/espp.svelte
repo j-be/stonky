@@ -28,12 +28,6 @@
 		periodEnd = format(addDays(addMonths(new Date(periodStart), 6), -1), 'yyyy-MM-dd');
 	};
 
-	const reset = () => {
-		periodStart = '';
-		periodEnd = '';
-		count = 0;
-	};
-
 	const save = () => {
 		if (!valid) {
 			return;
@@ -56,7 +50,7 @@
 			},
 		}));
 
-		goto('/');
+		goto('/', { replaceState: true });
 	};
 
 	$: valid = !!periodStart && !!periodEnd && !!count;
@@ -79,6 +73,6 @@
 			</label>
 		</div>
 
-		<ActionButtons {valid} secondaryButtonLabel="Reset" on:secondaryClick={reset} />
+		<ActionButtons {valid} />
 	</form>
 </Loading>
