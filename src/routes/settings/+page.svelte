@@ -10,7 +10,7 @@
 
 	const save = () => {
 		incomeTaxPercents && settingsStore.update((current) => ({ ...current, incomeTax: incomeTaxPercents / 100 }));
-		goto('/');
+		goto('/', { replaceState: true });
 	};
 
 	onMount(() => {
@@ -33,6 +33,6 @@
 				<a href="https://www.usp.gv.at/en/steuern-finanzen/einkommensteuer/tarifstufen.html" target="_blank"> here </a>
 			</small>
 		</label>
-		<ActionButtons {valid} secondaryButtonLabel="Cancel" on:secondaryClick={() => goto('/')} />
+		<ActionButtons {valid} />
 	</form>
 </Loading>

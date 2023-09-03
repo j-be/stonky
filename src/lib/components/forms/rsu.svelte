@@ -60,16 +60,7 @@
 			},
 		}));
 
-		goto('/');
-	};
-
-	const reset = () => {
-		count = 0;
-		granted = '';
-		firstVestPercentage = 0;
-		firstVestDuration = { ...defaultDuration };
-		subsequentVestsPercentage = 0;
-		subsequentVestsDuration = { ...defaultDuration };
+		goto('/', { replaceState: true });
 	};
 
 	const firstVestDurationChanged = (event: CustomEvent<Duration>) => {
@@ -121,6 +112,6 @@
 			</div>
 		</label>
 
-		<ActionButtons {valid} secondaryButtonLabel="Reset" on:secondaryClick={reset} />
+		<ActionButtons {valid} />
 	</form>
 </Loading>
