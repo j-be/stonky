@@ -13,6 +13,7 @@ interface StocksStore {
 
 interface Settings {
 	incomeTax: number;
+	hideDisclaimer: boolean;
 }
 
 /*
@@ -20,7 +21,10 @@ interface Settings {
  */
 const createPersistentStore = <T>(name: string, initialValue: T) => {
 	const [read, write] = storageReadWrite<T>(name);
-	const store = writable<T>(read() ?? initialValue);
+	const store = writable<T>({
+		...initialValue,
+		...read(),
+	});
 	store.subscribe((val) => write(val));
 	return store;
 };
@@ -55,5 +59,5 @@ export const stockPriceStore = readable(NaN, function start(set) {
 	fetchForNow('DT').then(set);
 });
 
-export const settingsStore = createPersistentStore<Settings>('settings', { incomeTax: 0.48 });
+export const settingsStore = createPersistentStore<Settings>('settings', { incomeTax: 0.48, hideDisclaimer: false });
 export const taxStore = derived(settingsStore, ($settingsStore) => $settingsStore.incomeTax);

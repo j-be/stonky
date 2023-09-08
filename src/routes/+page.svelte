@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { esppStore, exchangeRateStore, rsuStore, stockPriceStore, taxStore } from '$lib/stores';
 	import Stocks from '$lib/components/stocks.svelte';
+	import Disclaimer from '$lib/components/disclaimer.svelte';
 
 	let currentPrice = NaN;
 	let exchangeRate = NaN;
@@ -8,6 +9,8 @@
 	$: exchangeRate = $exchangeRateStore;
 	$: currentPrice = $stockPriceStore;
 </script>
+
+<Disclaimer />
 
 <article class="overview">
 	<table>

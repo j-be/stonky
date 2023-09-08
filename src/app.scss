@@ -11,7 +11,8 @@
 }
 
 details,
-summary {
+summary,
+.example {
 	border-radius: var(--border-radius);
 }
 
@@ -54,6 +55,25 @@ details {
 			display: flex;
 			flex-grow: 1;
 			gap: calc(var(--spacing));
+		}
+	}
+
+	.disclaimer {
+		display: flex;
+		flex-direction: column;
+		gap: calc(var(--spacing));
+		margin: calc(var(--spacing));
+		* {
+			margin: 0;
+		}
+	}
+
+	.hideButton {
+		display: flex;
+		justify-content: end;
+		button {
+			width: initial;
+			margin: calc(var(--spacing));
 		}
 	}
 }
@@ -197,4 +217,9 @@ nav {
 			text-align: center;
 		}
 	}
+}
+
+.example {
+	background-color: var(--card-sectionning-background-color);
+	padding: 7px;
 }
