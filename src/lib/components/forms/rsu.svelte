@@ -21,12 +21,15 @@
 
 	onMount(() => {
 		if (id !== null && $stocksStore.rsu.stocks[id]) {
+			const stock = $stocksStore.rsu.stocks[id];
 			({
 				count,
 				granted,
-				firstVest: { percentage: firstVestPercentage, duration: firstVestDuration },
-				subsequentVests: { percentage: subsequentVestsPercentage, duration: subsequentVestsDuration },
-			} = $stocksStore.rsu.stocks[id]);
+				firstVest: { duration: firstVestDuration },
+				subsequentVests: { duration: subsequentVestsDuration },
+			} = stock);
+			firstVestPercentage = stock.firstVest.percentage * 100;
+			subsequentVestsPercentage = stock.subsequentVests.percentage * 100;
 		}
 	});
 
@@ -46,11 +49,11 @@
 						count,
 						granted,
 						firstVest: {
-							percentage: firstVestPercentage,
+							percentage: firstVestPercentage / 100,
 							duration: firstVestDuration,
 						},
 						subsequentVests: {
-							percentage: subsequentVestsPercentage,
+							percentage: subsequentVestsPercentage / 100,
 							duration: subsequentVestsDuration,
 						},
 					},
@@ -94,7 +97,7 @@
 		<label for="firstVest">
 			First vest
 			<div id="firstVest" class="vest-row">
-				<input type="number" bind:value={firstVestPercentage} min="0" step="0.0000000001" />
+				<input type="number" bind:value={firstVestPercentage} min="0" max="100" step="0.0000000001" />
 				<span>% after</span>
 				<VestingPeriod {...firstVestDuration} on:change={firstVestDurationChanged} />
 				<div />
@@ -104,7 +107,7 @@
 		<label for="subsequentVests">
 			Subsequent vests
 			<div id="subsequentVests" class="vest-row">
-				<input type="number" bind:value={subsequentVestsPercentage} min="0" step="0.0000000001" />
+				<input type="number" bind:value={subsequentVestsPercentage} min="0" max="100" step="0.0000000001" />
 				<span>% every</span>
 				<VestingPeriod {...subsequentVestsDuration} on:change={subsequentVestsDurationChanged} />
 				<div />
