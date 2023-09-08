@@ -26,7 +26,7 @@
 	$: capitalGains = espp.count * ($stockPriceStore - endPrice);
 	$: currentValue = espp.count * $stockPriceStore;
 	$: isTaxFree = (intervalToDuration({ start: new Date(espp.periodEnd), end: new Date() }).years ?? 0) > 4;
-	$: netValue = currentValue - (isTaxFree ? 0 : discount * $taxStore) - Math.max(capitalGains, 0) * 0.25;
+	$: netValue = currentValue - (isTaxFree ? 0 : discount * $taxStore) - Math.max(capitalGains, 0) * 0.275;
 	$: dispatch('currentNet', { value: netValue });
 </script>
 
