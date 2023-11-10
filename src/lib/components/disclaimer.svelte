@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { settingsStore } from '$lib/stores';
-	import Money from './money.svelte';
 
 	const handleDisclaimerButton = () => {
 		settingsStore.update((current) => ({ ...current, hideDisclaimer: true }));
