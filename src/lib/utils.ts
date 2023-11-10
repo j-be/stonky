@@ -49,3 +49,19 @@ export const formatNumber = (value: number, digits = 2) =>
 		minimumFractionDigits: digits,
 		maximumFractionDigits: digits,
 	});
+
+const toMonths = (duration: Duration): number => {
+	switch (duration.unit) {
+		case 'months':
+			return duration.amount;
+		case 'years':
+			return duration.amount * 12;
+		case 'quarters':
+			return duration.amount * 3;
+	}
+};
+
+export const getDurationInMonths = (rsu: RestrictedStockUnits): number => {
+	const numberOfSubsequent = (1 - rsu.firstVest.percentage) / rsu.subsequentVests.percentage;
+	return toMonths(rsu.firstVest.duration) + toMonths(rsu.subsequentVests.duration) * numberOfSubsequent;
+};

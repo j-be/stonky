@@ -1,13 +1,15 @@
 <script lang="ts">
-	import { esppStore, exchangeRateStore, rsuStore, stockPriceStore, taxStore } from '$lib/stores';
+	import { annualGrossStore, esppStore, exchangeRateStore, rsuStore, stockPriceStore, taxStore } from '$lib/stores';
 	import Stocks from '$lib/components/stocks.svelte';
 	import Disclaimer from '$lib/components/disclaimer.svelte';
+	import Money from '$lib/components/money.svelte';
 
 	let currentPrice = NaN;
 	let exchangeRate = NaN;
 
 	$: exchangeRate = $exchangeRateStore;
 	$: currentPrice = $stockPriceStore;
+	$: annualGross = $annualGrossStore;
 </script>
 
 <Disclaimer />
@@ -40,6 +42,16 @@
 				<td>
 					{$taxStore * 100} %
 					<a href="/settings" class="icon settings">&#8288;</a>
+				</td>
+			</tr>
+			<tr>
+				<th>RSU annual</th>
+				<td>
+					{#if !isNaN(annualGross)}
+						<Money value={annualGross} />
+					{:else}
+						<span aria-busy="true" />
+					{/if}
 				</td>
 			</tr>
 		</tbody>
