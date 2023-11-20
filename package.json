@@ -21,7 +21,7 @@
 	},
 	"devDependencies": {
 		"@picocss/pico": "^1.5.10",
-		"@playwright/test": "^1.39.0",
+		"@playwright/test": "^1.40.0",
 		"@sveltejs/adapter-static": "^2.0.3",
 		"@sveltejs/kit": "^1.27.5",
 		"@typescript-eslint/eslint-plugin": "^6.10.0",
