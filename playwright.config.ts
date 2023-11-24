@@ -7,6 +7,7 @@ const config: PlaywrightTestConfig = {
 	},
 	testDir: 'e2e',
 	testMatch: /.*\.spec\.[jt]s/,
+	workers: 1,
 };
 
 export default config;
