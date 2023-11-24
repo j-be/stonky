@@ -249,3 +249,7 @@ body div:first-child > footer {
 	background-color: var(--card-sectionning-background-color);
 	padding: 7px;
 }
+
+article > header > h2 {
+	margin: 0;
+}

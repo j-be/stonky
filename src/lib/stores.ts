@@ -47,7 +47,7 @@ export const insertOrUpdate = <T>(current: T[], entity: T, id: number | null = n
  */
 export const stocksStore: Writable<StocksStore> = createPersistentStore('stocks', {
 	espp: { stocks: [] },
-	rsu: { stocks: [] },
+	rsu: { stocks: [], sellings: [] },
 });
 export const esppStore = derived(stocksStore, ($stocksStore) => $stocksStore.espp.stocks);
 export const rsuStore = derived(stocksStore, ($stocksStore) => $stocksStore.rsu.stocks);
