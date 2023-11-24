@@ -1,10 +1,12 @@
 <script lang="ts">
-	import type { Duration } from '$lib/model';
+	import type { Duration, Selling } from '$lib/model';
 	import Loading from '../loading.svelte';
 	import { insertOrUpdate, stocksStore } from '$lib/stores';
 	import ActionButtons from './actionButtons.svelte';
 	import VestingPeriod from './vestingPeriod.svelte';
 	import { onMount } from 'svelte';
+	import Money from '../money.svelte';
+	import { formatNumber } from '$lib/utils';
 
 	const defaultDuration: Duration = { amount: 1, unit: 'years' };
 
@@ -16,6 +18,7 @@
 	let firstVestDuration: Duration = { ...defaultDuration };
 	let subsequentVestsPercentage = 0;
 	let subsequentVestsDuration: Duration = { ...defaultDuration };
+	let sellings: Selling[] = [];
 
 	let loading = false;
 
@@ -27,6 +30,7 @@
 				granted,
 				firstVest: { duration: firstVestDuration },
 				subsequentVests: { duration: subsequentVestsDuration },
+				sellings,
 			} = stock);
 			firstVestPercentage = stock.firstVest.percentage * 100;
 			subsequentVestsPercentage = stock.subsequentVests.percentage * 100;
@@ -56,6 +60,7 @@
 							percentage: subsequentVestsPercentage / 100,
 							duration: subsequentVestsDuration,
 						},
+						sellings,
 					},
 					id,
 				),
@@ -113,6 +118,33 @@
 				<div />
 			</div>
 		</label>
+
+		<article>
+			<header>
+				<h2>Sellings</h2>
+			</header>
+			<body>
+				{#if sellings?.length}
+				<div>
+					{#each sellings as selling, i}
+					<a href="/edit/rsu/{id}/sellings/{i}" class="icon edit">&#8288;</a>
+					<span class="muted">On</span>
+					{selling.date}
+					<span class="muted">sold</span>
+					{selling.count} stocks <span class="muted">for</span>
+					{formatNumber(selling.price)} $ each <span class="muted">=</span>
+					<Money value={selling.count * selling.price} deductTax={false} />
+					<hr>
+					{/each}
+					</div>
+				{:else}
+					<p>Nothing sold yet</p>
+				{/if}
+			</body>
+			<footer>
+				<a href="/add/rsu/{id}/sellings/" role="button"><span class="icon add" />&nbsp;Add selling</a>
+			</footer>
+		</article>
 
 		<ActionButtons {valid} />
 	</form>

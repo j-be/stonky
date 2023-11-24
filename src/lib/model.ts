@@ -22,11 +22,18 @@ export interface Vesting {
 	percentage: number;
 }
 
+export interface Selling {
+	count: number;
+	price: number;
+	date: string;
+}
+
 export interface RestrictedStockUnits extends Stock {
 	type: 'rsu';
 	granted: string;
 	firstVest: Vesting;
 	subsequentVests: Vesting;
+	sellings: Selling[];
 }
 
 export interface EmployeeStockPurchase extends Stock {
