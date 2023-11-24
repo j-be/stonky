@@ -14,7 +14,8 @@ body {
 }
 
 .muted {
-	color: var(--secondary);
+	--color: var(--muted-color);
+	color: var(--color);
 }
 
 .uppercase {
