@@ -1,11 +1,10 @@
 
 <script lang="ts">
-	import { insertOrUpdate, stockPriceStore, stocksStore } from '$lib/stores';
-	import { onDestroy, onMount } from 'svelte';
+	import { insertOrUpdate, stocksStore } from '$lib/stores';
+	import { onMount } from 'svelte';
 	import Loading from '../loading.svelte';
 	import ActionButtons from './actionButtons.svelte';
 	import { format } from 'date-fns';
-	import type { Unsubscriber } from 'svelte/motion';
 
 	export let rsuId: number;
 	export let sellingId: number | null = null;
@@ -14,8 +13,6 @@
 	let price = 0;
 	let date = '';
 	let loading = true;
-
-	let unsubscribe: Unsubscriber = () => {};
 
 	onMount(() => {
 		if (rsuId === null || !$stocksStore.rsu.stocks[rsuId]) {
@@ -29,8 +26,6 @@
 			({ count, price, date } = stock.sellings[sellingId]);
 		} else {
 			date = format(new Date(), 'yyyy-MM-dd');
-			let unsubscribe = stockPriceStore.subscribe(fetched => { price = fetched; });
-			onDestroy(unsubscribe);
 		}
 
 		loading = false;
@@ -67,7 +62,6 @@
 		!!count &&
 		!!price && price > 0 &&
 		!!date;
-	$: price && unsubscribe();
 
 </script>
 
