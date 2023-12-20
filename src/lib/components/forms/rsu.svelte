@@ -125,17 +125,17 @@
 			</header>
 			<body>
 				{#if sellings?.length}
-				<div>
-					{#each sellings as selling, i}
-					<a href="/edit/rsu/{id}/sellings/{i}" class="icon edit">&#8288;</a>
-					<span class="muted">On</span>
-					{selling.date}
-					<span class="muted">sold</span>
-					{selling.count} stocks <span class="muted">for</span>
-					{formatNumber(selling.price)} $ each <span class="muted">=</span>
-					<Money value={selling.count * selling.price} deductTax={false} />
-					<hr>
-					{/each}
+					<div>
+						{#each sellings as selling, i}
+							<a href="/edit/rsu/{id}/sellings/{i}" class="icon edit">&#8288;</a>
+							<span class="muted">On</span>
+							{selling.date}
+							<span class="muted">sold</span>
+							{selling.count} stocks <span class="muted">for</span>
+							{formatNumber(selling.price)} $ each <span class="muted">=</span>
+							<Money value={selling.count * selling.price} deductTax={false} />
+							<hr />
+						{/each}
 					</div>
 				{:else}
 					<p>Nothing sold yet</p>
