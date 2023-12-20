@@ -1,4 +1,3 @@
-
 <script lang="ts">
 	import { insertOrUpdate, stocksStore } from '$lib/stores';
 	import { onMount } from 'svelte';
@@ -16,7 +15,7 @@
 
 	onMount(() => {
 		if (rsuId === null || !$stocksStore.rsu.stocks[rsuId]) {
-			console.log("Not found", rsuId, $stocksStore.rsu.stocks);
+			console.log('Not found', rsuId, $stocksStore.rsu.stocks);
 			loading = false;
 			return;
 		}
@@ -39,11 +38,7 @@
 		stocksStore.update((current) => {
 			const stock = {
 				...current.rsu.stocks[rsuId],
-				sellings: insertOrUpdate(
-					current.rsu.stocks[rsuId].sellings ?? [],
-					{ count, price, date },
-					sellingId,
-				),
+				sellings: insertOrUpdate(current.rsu.stocks[rsuId].sellings ?? [], { count, price, date }, sellingId),
 			};
 
 			return {
@@ -58,15 +53,10 @@
 		history.back();
 	};
 
-	$: valid =
-		!!count &&
-		!!price && price > 0 &&
-		!!date;
-
+	$: valid = !!count && !!price && price > 0 && !!date;
 </script>
 
 <Loading {loading}>
-
 	<form on:submit|preventDefault={save}>
 		<label for="count">
 			Number of shares
