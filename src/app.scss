@@ -205,17 +205,13 @@ nav {
 	background-color: var(--pico-card-background-color);
 	box-shadow: 0px -10px 20px 0px black;
 
-	@media screen and (max-width: map.get($breakpoints, 'small')) {
-		padding: calc(var(--pico-spacing) / 2);
-	}
-
 	div.container {
 		margin: auto;
 	}
 
 	h1 {
 		margin: 0;
-		@media screen and (max-width: map.get($breakpoints, 'small')) {
+		@media screen and (max-width: map.get($breakpoints, 'sm', 'breakpoint')) {
 			width: 100%;
 			text-align: center;
 		}
