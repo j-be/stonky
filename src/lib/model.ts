@@ -42,7 +42,13 @@ export interface EmployeeStockPurchase extends Stock {
 	periodEnd: string;
 }
 
+export interface VestDate {
+	dateString: string;
+	isInPast: boolean;
+}
+
 export interface RsuVest {
 	count: number;
-	date: { dateString: string; isInPast: boolean };
+	date: VestDate;
+	price: number | null;
 }
