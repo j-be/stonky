@@ -204,6 +204,7 @@ nav {
 	padding: calc(var(--pico-spacing));
 	background-color: var(--pico-card-background-color);
 	box-shadow: 0px -10px 20px 0px black;
+	z-index: 10;
 
 	div.container {
 		margin: auto;
