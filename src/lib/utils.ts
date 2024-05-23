@@ -1,24 +1,21 @@
 import { add, format, intervalToDuration, isPast } from 'date-fns';
-import type { Duration, RestrictedStockUnits, RsuVest } from './model';
+import type { Duration, RestrictedStockUnits, RsuVest, VestDate } from './model';
+import { fetchForDateString } from './yfinance-api';
 
-export const flattenRsu = (rsu: RestrictedStockUnits): { durationMonths: number; vests: RsuVest[] } => {
-	const vests = [
-		{
-			date: getDate(rsu.granted, 1, rsu.firstVest.duration),
-			count: rsu.count * rsu.firstVest.percentage,
-		},
-	];
+export const flattenRsu = async (rsu: RestrictedStockUnits): Promise<{ durationMonths: number; vests: RsuVest[] }> => {
+	const vests = [await vest(getDate(rsu.granted, 1, rsu.firstVest.duration), rsu.count * rsu.firstVest.percentage)];
 
 	let vested = rsu.firstVest.percentage;
 	let i = 0;
 	while (Math.abs(vested - 1) > 0.0000001) {
 		vested += rsu.subsequentVests.percentage;
 		i++;
-
-		vests.push({
-			date: getDate(vests[0].date.dateString, i, rsu.subsequentVests.duration),
-			count: rsu.count * rsu.subsequentVests.percentage,
-		});
+		vests.push(
+			await vest(
+				getDate(vests[0].date.dateString, i, rsu.subsequentVests.duration),
+				rsu.count * rsu.subsequentVests.percentage,
+			),
+		);
 	}
 
 	const duration = intervalToDuration({
@@ -41,6 +38,14 @@ const getDate = (startDate: string, i: number, duration: Duration) => {
 	return {
 		dateString: format(date, 'yyyy-MM-dd'),
 		isInPast: isPast(date),
+	};
+};
+
+const vest = async (date: VestDate, count: number): Promise<RsuVest> => {
+	return {
+		date,
+		count,
+		price: date.isInPast ? await fetchForDateString(date.dateString, 'DT') : null,
 	};
 };
 

@@ -9,9 +9,12 @@
 	export let rsu: RestrictedStockUnits;
 
 	let durationMonths = 0;
-	let vests: RsuVest[];
+	let vests: RsuVest[] = [];
 
-	$: ({ durationMonths, vests } = flattenRsu(rsu));
+	$: flattenRsu(rsu).then((flattened) => {
+		durationMonths = flattened.durationMonths;
+		vests = flattened.vests;
+	});
 	$: currentValue = $stockPriceStore * rsu.count;
 </script>
 
@@ -20,6 +23,7 @@
 		<tr>
 			<th>Vesting date</th>
 			<th>Amount</th>
+			<th>Price on vest</th>
 			<th>Current net worth</th>
 		</tr>
 	</thead>
@@ -28,6 +32,11 @@
 			<tr class:muted={vest.date.isInPast}>
 				<td>{vest.date.dateString}</td>
 				<td><FormattedNumber value={vest.count} /></td>
+				<td>
+					{#if vest.price}
+						<FormattedNumber value={vest.price} unit="$" />
+					{/if}
+				</td>
 				<td><Money value={$stockPriceStore * vest.count} /></td>
 			</tr>
 		{/each}
