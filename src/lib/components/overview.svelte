@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { annualGrossStore, exchangeRateStore, stockPriceStore, taxStore } from '$lib/stores';
 	import Money from '$lib/components/money.svelte';
+	import { formatNumber } from '$lib/utils';
 
 	let currentPrice = NaN;
 	let exchangeRate = NaN;
@@ -41,10 +42,12 @@
 				</td>
 			</tr>
 			<tr>
-				<th>RSU annual</th>
+				<th>RSU annual gross</th>
 				<td>
 					{#if !isNaN(annualGross)}
-						<Money value={annualGross} />
+						<em data-tooltip={`Net: ${formatNumber(annualGross * $taxStore * $exchangeRateStore, 2)} €`}>
+							<Money value={annualGross} deductTax={false} />
+						</em>
 					{:else}
 						<span aria-busy="true" />
 					{/if}

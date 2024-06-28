@@ -25,7 +25,7 @@ test('add RSUs', async ({ page }) => {
 	await page.getByRole('button', { name: 'Save' }).click();
 
 	// Check
-	await expect(page.locator('.overview').getByText('RSU annual 1,497.60 € (3,200.00 $)')).toBeVisible();
+	await expect(page.locator('.overview').getByText('RSU annual gross 2,880.00 € (3,200.00 $)')).toBeVisible();
 	const rsu = page.locator('details').nth(1);
 	await expect(rsu).toBeVisible();
 	await expect((await rsu.locator('summary').textContent())?.trim()).toContain('rsu 128 5,990.40 € (12,800.00 $)');
@@ -68,7 +68,7 @@ test('add ESPPs', async ({ page }) => {
 	await page.getByRole('button', { name: 'Save' }).click();
 
 	// Check
-	await expect(page.locator('.overview').getByText('RSU annual 0.00 € (0.00 $)')).toBeVisible();
+	await expect(page.locator('.overview').getByText('RSU annual gross 0.00 € (0.00 $)')).toBeVisible();
 	const espp = page.locator('details').nth(1);
 	await expect(espp).toBeVisible();
 	await expect(espp.getByText(/espp 128 10,626.97 € \(11,807.74 \$\)/)).toBeVisible();
