@@ -37,7 +37,13 @@
 						<FormattedNumber value={vest.price} unit="$" />
 					{/if}
 				</td>
-				<td><Money value={$stockPriceStore * vest.count} /></td>
+				<td>
+					{#if vest.price}
+						<Money value={vest.price * vest.count} />
+					{:else}
+						<Money value={$stockPriceStore * vest.count} />
+					{/if}
+				</td>
 			</tr>
 		{/each}
 	</tbody>
