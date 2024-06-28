@@ -18,7 +18,7 @@
 				<th>Stock price</th>
 				<td>
 					{#if !isNaN(currentPrice)}
-						{currentPrice} $
+						{formatNumber(currentPrice)} $
 					{:else}
 						<span aria-busy="true" />
 					{/if}
@@ -28,7 +28,7 @@
 				<th>Exchange rate</th>
 				<td>
 					{#if !isNaN(exchangeRate)}
-						{exchangeRate} <sup>$</sup>/<sub>€</sub>
+						{formatNumber(exchangeRate, 3)} <sup>$</sup>/<sub>€</sub>
 					{:else}
 						<span aria-busy="true" />
 					{/if}

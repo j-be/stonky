@@ -23,7 +23,7 @@
 		<tr>
 			<th>Vesting date</th>
 			<th>Amount</th>
-			<th>Price on vest</th>
+			<th>Price</th>
 			<th>Current net worth</th>
 		</tr>
 	</thead>
