@@ -5,6 +5,14 @@ updates:
     schedule:
       interval: "weekly"
     groups:
-      typescript-eslint:
+      lint-build-test:
         patterns:
+        - "@playwright/test"
         - "@typescript-eslint/*"
+        - "eslint-plugin-svelte"
+        - "prettier-plugin-svelte"
+        - "sass"
+        - "svelte-check"
+        - "typescript"
+        - "vite"
+        - "vitest"
