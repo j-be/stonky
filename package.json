@@ -24,8 +24,8 @@
 		"@playwright/test": "^1.45.2",
 		"@sveltejs/adapter-static": "^3.0.2",
 		"@sveltejs/kit": "^2.5.18",
-		"@typescript-eslint/eslint-plugin": "^7.16.1",
-		"@typescript-eslint/parser": "^7.16.1",
+		"@typescript-eslint/eslint-plugin": "^7.17.0",
+		"@typescript-eslint/parser": "^7.17.0",
 		"eslint": "^8.57.0",
 		"eslint-config-prettier": "^9.1.0",
 		"eslint-plugin-svelte": "^2.43.0",
@@ -36,7 +36,7 @@
 		"tslib": "^2.6.3",
 		"typescript": "^5.5.3",
 		"vite": "^5.3.4",
-		"vitest": "^2.0.3"
+		"vitest": "^2.0.4"
 	},
 	"type": "module"
 }
