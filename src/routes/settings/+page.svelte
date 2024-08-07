@@ -8,7 +8,9 @@
 	let loading = true;
 
 	const save = () => {
-		incomeTaxPercents && settingsStore.update((current) => ({ ...current, incomeTax: incomeTaxPercents / 100 }));
+		if (incomeTaxPercents) {
+			settingsStore.update((current) => ({ ...current, incomeTax: incomeTaxPercents / 100 }));
+		}
 		history.back();
 	};
 
