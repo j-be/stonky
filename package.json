@@ -21,11 +21,11 @@
 	},
 	"devDependencies": {
 		"@picocss/pico": "^2.0.6",
-		"@playwright/test": "^1.45.3",
+		"@playwright/test": "^1.46.1",
 		"@sveltejs/adapter-static": "^3.0.3",
 		"@sveltejs/kit": "^2.5.21",
-		"@typescript-eslint/eslint-plugin": "^8.0.1",
-		"@typescript-eslint/parser": "^8.0.1",
+		"@typescript-eslint/eslint-plugin": "^8.1.0",
+		"@typescript-eslint/parser": "^8.1.0",
 		"eslint": "^9.9.0",
 		"eslint-config-prettier": "^9.1.0",
 		"eslint-plugin-svelte": "^2.43.0",
@@ -35,7 +35,7 @@
 		"svelte-check": "^3.8.5",
 		"tslib": "^2.6.3",
 		"typescript": "^5.5.4",
-		"vite": "^5.3.5",
+		"vite": "^5.4.1",
 		"vitest": "^2.0.5"
 	},
 	"type": "module"
