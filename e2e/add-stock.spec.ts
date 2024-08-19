@@ -32,7 +32,7 @@ test('add RSUs', async ({ page }) => {
 
 	rsu.click();
 	const rows = rsu.getByRole('row');
-	await expect(rows).toHaveCount(16);
+	await expect(rows).toHaveCount(15);
 	await expect((await rows.nth(1).textContent())?.trim()).toBe('2023-11-10 32.00 100.00 $ 1,497.60 € (3,200.00 $)');
 	for (let j = 0; j < 3; j++) {
 		for (let i = 0; i < 4; i++) {

@@ -49,12 +49,7 @@
 	</tbody>
 	<tfoot>
 		<tr>
-			<td>Sum</td>
-			<td>{rsu.count}</td>
-			<td><Money value={currentValue} /></td>
-		</tr>
-		<tr>
-			<td />
+			<td colspan="2" />
 			<td>Per month</td>
 			<td><Money value={currentValue / durationMonths} /></td>
 		</tr>
