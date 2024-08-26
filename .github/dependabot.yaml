@@ -9,10 +9,12 @@ updates:
         patterns:
         - "@playwright/test"
         - "@typescript-eslint/*"
+        - "eslint"
         - "eslint-plugin-svelte"
         - "prettier-plugin-svelte"
         - "sass"
         - "svelte-check"
+        - "tslib"
         - "typescript"
         - "vite"
         - "vitest"
