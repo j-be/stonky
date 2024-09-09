@@ -23,7 +23,7 @@
 		"@picocss/pico": "^2.0.6",
 		"@playwright/test": "^1.47.0",
 		"@sveltejs/adapter-static": "^3.0.4",
-		"@sveltejs/kit": "^2.5.25",
+		"@sveltejs/kit": "^2.5.26",
 		"@typescript-eslint/eslint-plugin": "^8.4.0",
 		"@typescript-eslint/parser": "^8.4.0",
 		"eslint": "^9.10.0",
