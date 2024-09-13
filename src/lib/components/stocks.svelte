@@ -3,8 +3,8 @@
 	import type { EmployeeStockPurchase, RestrictedStockUnits } from '../model';
 
 	import Espp from './espp.svelte';
-	import Money from './money.svelte';
 	import Rsu from './rsu.svelte';
+	import StocksHeader from './stocks/stocksHeader.svelte';
 
 	export let id: number;
 	export let stock: RestrictedStockUnits | EmployeeStockPurchase;
@@ -19,16 +19,7 @@
 </script>
 
 <details>
-	<summary>
-		<div class="title">
-			<a href="/edit/{stock.type}/{id}" class="icon edit">&#8288;</a>
-			<span>
-				<span class="uppercase">{stock.type}</span>
-				{stock.count}
-			</span>
-		</div>
-		<div><Money {value} deductTax={stock.type == 'rsu'} /></div>
-	</summary>
+	<summary><StocksHeader {id} type={stock.type} count={stock.count} {value} /></summary>
 
 	{#if stock.type === 'rsu'}
 		<Rsu rsu={stock} />
