@@ -15,6 +15,7 @@ test('add RSUs', async ({ page }) => {
 	await page.getByRole('button', { name: 'Add stocks' }).click();
 
 	// Input values
+	await page.getByLabel('Number of shares').isVisible();
 	await page.getByText('rsu').click();
 	await page.getByLabel('Number of shares').fill('128');
 	await page.getByLabel('Granted').fill('2022-11-10');
@@ -33,12 +34,14 @@ test('add RSUs', async ({ page }) => {
 	rsu.click();
 	const rows = rsu.getByRole('row');
 	await expect(rows).toHaveCount(15);
-	await expect((await rows.nth(1).textContent())?.trim()).toBe('2023-11-10 32.00 100.00 $ 1,497.60 € (3,200.00 $)');
+	await expect((await rows.nth(1).textContent())?.trim()).toBe(
+		'2023-11-10 32.00 100.00 $ @ 0.900 €/$ 1,497.60 € (3,200.00 $)',
+	);
 	for (let j = 0; j < 3; j++) {
 		for (let i = 0; i < 4; i++) {
 			await expect((await rows.nth(2 + i + 4 * j).textContent())?.trim()).toMatch(
 				new RegExp(
-					`202${4 + j}-${String(2 + i * 3).padStart(2, '0')}-10 8\\.00 (100\\.00 \\$)? 374\\.40 € \\(800\\.00 \\$\\)`,
+					`202${4 + j}-${String(2 + i * 3).padStart(2, '0')}-10 8\\.00 (100\\.00 \\$)? (@ 0\\.900 €/\\$)? 374\\.40 € \\(800\\.00 \\$\\)`,
 				),
 			);
 		}
