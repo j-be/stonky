@@ -2,7 +2,6 @@
 	import { stockPriceStore } from '$lib/stores';
 	import type { EmployeeStockPurchase, RestrictedStockUnits } from '../model';
 
-	import Espp from './espp.svelte';
 	import Rsu from './rsu.svelte';
 	import StocksHeader from './stocks/stocksHeader.svelte';
 
@@ -11,11 +10,7 @@
 
 	let value = NaN;
 
-	const handleCurrentValue = (currentValue: CustomEvent<{ value: number }>) => {
-		value = currentValue.detail.value;
-	};
-
-	$: if (stock.type === 'rsu') value = stock.count * $stockPriceStore;
+	$: value = stock.count * $stockPriceStore;
 </script>
 
 <details>
@@ -23,8 +18,6 @@
 
 	{#if stock.type === 'rsu'}
 		<Rsu rsu={stock} />
-	{:else if stock.type === 'espp'}
-		<Espp on:currentNet={handleCurrentValue} espp={stock} />
 	{:else}
 		Unknown Type
 	{/if}

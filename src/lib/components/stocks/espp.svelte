@@ -1,6 +1,6 @@
 <script lang="ts">
-	import type { EmployeeStockPurchase } from '../model';
-	import Money from './money.svelte';
+	import type { EmployeeStockPurchase } from '../../model';
+	import Money from '../money.svelte';
 	import { createEventDispatcher, onMount } from 'svelte';
 	import { intervalToDuration } from 'date-fns';
 	import { stockPriceStore, taxStore } from '$lib/stores';
