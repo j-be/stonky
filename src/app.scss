@@ -237,6 +237,16 @@ body div:first-child > footer {
 	padding: 7px;
 }
 
+.overflowing-table {
+	thead {
+		position: sticky;
+		top: 0;
+		background-color: var(--pico-card-background-color);
+	}
+
+	max-height: 460px;
+}
+
 // Workarounds
 
 td,

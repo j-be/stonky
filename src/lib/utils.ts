@@ -2,6 +2,15 @@ import { add, format, intervalToDuration, isPast } from 'date-fns';
 import type { Duration, RestrictedStockUnits, RsuVest, VestDate } from './model';
 import { fetchForDateString } from './yfinance-api';
 
+export const flattenRsus = async (rsus: RestrictedStockUnits[]): Promise<RsuVest[]> => {
+	return Promise.all(rsus.map(flattenRsu)).then((listOfLists) =>
+		listOfLists
+			.map((vest) => vest.vests)
+			.reduce((agg, current) => agg.concat(current), [])
+			.sort((a, b) => a.date.dateString.localeCompare(b.date.dateString)),
+	);
+};
+
 export const flattenRsu = async (rsu: RestrictedStockUnits): Promise<{ durationMonths: number; vests: RsuVest[] }> => {
 	const vests = [await vest(getDate(rsu.granted, 1, rsu.firstVest.duration), rsu.count * rsu.firstVest.percentage)];
 
