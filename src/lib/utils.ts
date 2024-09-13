@@ -2,7 +2,24 @@ import { add, format, intervalToDuration, isPast } from 'date-fns';
 import type { Duration, RestrictedStockUnits, RsuVest, VestDate } from './model';
 import { fetchForDateString } from './yfinance-api';
 
-export const flattenRsu = async (rsu: RestrictedStockUnits): Promise<{ durationMonths: number; vests: RsuVest[] }> => {
+export const flattenRsus = async (rsus: RestrictedStockUnits[]): Promise<{ vests: RsuVest[]; perMonth: number }> => {
+	return Promise.all(rsus.map(flattenRsu))
+		.then((listOfLists) =>
+			listOfLists.reduce(
+				(agg, current) => ({
+					vests: agg.vests.concat(current.vests),
+					perMonth: agg.perMonth + current.perMonth,
+				}),
+				{ vests: [], perMonth: 0 },
+			),
+		)
+		.then((x) => ({
+			...x,
+			vests: x.vests.sort((a, b) => a.date.dateString.localeCompare(b.date.dateString)),
+		}));
+};
+
+export const flattenRsu = async (rsu: RestrictedStockUnits): Promise<{ vests: RsuVest[]; perMonth: number }> => {
 	const vests = [await vest(getDate(rsu.granted, 1, rsu.firstVest.duration), rsu.count * rsu.firstVest.percentage)];
 
 	let vested = rsu.firstVest.percentage;
@@ -24,7 +41,7 @@ export const flattenRsu = async (rsu: RestrictedStockUnits): Promise<{ durationM
 	});
 	const durationMonths = (duration.years ?? 0) * 12 + (duration.months ?? 0);
 
-	return { durationMonths, vests };
+	return { vests, perMonth: rsu.count / durationMonths };
 };
 
 const getDate = (startDate: string, i: number, duration: Duration) => {
