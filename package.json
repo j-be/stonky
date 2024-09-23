@@ -17,7 +17,7 @@
 	},
 	"dependencies": {
 		"@picocss/pico": "^2.0.6",
-		"date-fns": "^4.0.0"
+		"date-fns": "^4.1.0"
 	},
 	"devDependencies": {
 		"@picocss/pico": "^2.0.6",
