@@ -28,7 +28,7 @@
 				<th>Exchange rate</th>
 				<td>
 					{#if !isNaN(exchangeRate)}
-						{formatNumber(exchangeRate, 3)} <sup>$</sup>/<sub>€</sub>
+						{formatNumber(exchangeRate, 3)} <sup>€</sup>/<sub>$</sub>
 					{:else}
 						<span aria-busy="true" />
 					{/if}
