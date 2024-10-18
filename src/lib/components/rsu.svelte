@@ -39,7 +39,7 @@
 				</td>
 				<td>
 					{#if vest.price}
-						<Money value={vest.price * vest.count} />
+						<Money value={vest.price * vest.count} exchangeRate={vest.exchangeRate} />
 					{:else}
 						<Money value={$stockPriceStore * vest.count} />
 					{/if}
