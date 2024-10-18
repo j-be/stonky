@@ -51,4 +51,5 @@ export interface RsuVest {
 	count: number;
 	date: VestDate;
 	price: number | null;
+	exchangeRate: number | null;
 }

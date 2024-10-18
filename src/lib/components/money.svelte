@@ -4,8 +4,9 @@
 
 	export let value: number;
 	export let deductTax = true;
+	export let exchangeRate: number | null = null;
 
-	$: dollarToEuro = $exchangeRateStore;
+	$: dollarToEuro = exchangeRate ?? $exchangeRateStore;
 </script>
 
 {#if isNaN(dollarToEuro) || isNaN(value)}
