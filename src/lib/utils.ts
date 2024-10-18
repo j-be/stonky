@@ -42,10 +42,17 @@ const getDate = (startDate: string, i: number, duration: Duration) => {
 };
 
 const vest = async (date: VestDate, count: number): Promise<RsuVest> => {
+	const priceAndExchangeRate = date.isInPast
+		? {
+				price: await fetchForDateString(date.dateString, 'DT'),
+				exchangeRate: await fetchForDateString(date.dateString, 'EUR=X'),
+			}
+		: { price: null, exchangeRate: null };
+
 	return {
 		date,
 		count,
-		price: date.isInPast ? await fetchForDateString(date.dateString, 'DT') : null,
+		...priceAndExchangeRate,
 	};
 };
 
