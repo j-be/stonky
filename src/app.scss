@@ -78,6 +78,7 @@ details {
 	.hideButton {
 		display: flex;
 		justify-content: end;
+
 		button {
 			width: initial;
 			margin: calc(var(--pico-spacing));
@@ -85,9 +86,13 @@ details {
 	}
 }
 
-.danger-zone {
-	margin-top: calc(var(--pico-spacing));
+.action-buttons {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	column-gap: calc(var(--pico-spacing));
+}
 
+.danger-zone {
 	div.entry {
 		display: flex;
 		flex-direction: row;
@@ -244,8 +249,4 @@ body div:first-child > footer {
 td,
 th {
 	background-color: initial;
-}
-
-button[type='submit'] {
-	margin: 0;
 }
