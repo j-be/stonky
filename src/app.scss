@@ -86,6 +86,8 @@ details {
 }
 
 .danger-zone {
+	margin-top: calc(var(--pico-spacing));
+
 	div.entry {
 		display: flex;
 		flex-direction: row;
