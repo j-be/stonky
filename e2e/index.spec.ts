@@ -18,7 +18,7 @@ test('stock price and exchange rate are displayed', async ({ page }) => {
 	await page.goto('/');
 
 	const overview = page.locator('.overview');
-	await expect(overview.getByText('Stock price 123.45 $')).toBeVisible();
-	await expect(overview.getByText('Exchange rate 67.890 €/$')).toBeVisible();
-	await expect(overview.getByText('RSU annual gross 0.00 € (0.00 $)')).toBeVisible();
+	await expect(overview.getByText('Stock price123.45 $')).toBeVisible();
+	await expect(overview.getByText('Exchange rate67.890 €/$')).toBeVisible();
+	await expect(overview.getByText('RSU annual gross0.00 € (0.00 $)')).toBeVisible();
 });
