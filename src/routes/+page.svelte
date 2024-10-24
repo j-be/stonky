@@ -12,4 +12,4 @@
 <Espps />
 <Rsus />
 
-<a href="/add" role="button"><span class="icon add" />&nbsp;Add stocks</a>
+<a href="/add" role="button"><span class="icon add"></span>&nbsp;Add stocks</a>

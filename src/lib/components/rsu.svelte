@@ -49,7 +49,7 @@
 	</tbody>
 	<tfoot>
 		<tr>
-			<td colspan="2" />
+			<td colspan="2"></td>
 			<td>Per month</td>
 			<td><Money value={currentValue / durationMonths} /></td>
 		</tr>
