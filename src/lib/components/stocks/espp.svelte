@@ -84,9 +84,11 @@
 				</tr>
 				<tr>
 					<td>Capital gains</td>
-					<em data-tooltip={`Bought at ${formatNumber(endPrice)}$ = ${formatNumber(espp.count * endPrice)}$`}>
-						<td><Money value={capitalGains} deductTax={false} /></td>
-					</em>
+					<td>
+						<em data-tooltip={`Bought at ${formatNumber(endPrice)}$ = ${formatNumber(espp.count * endPrice)}$`}>
+							<Money value={capitalGains} deductTax={false} />
+						</em>
+					</td>
 				</tr>
 				<tr>
 					<td>Discount (untaxed)</td>
