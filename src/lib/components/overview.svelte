@@ -20,7 +20,7 @@
 					{#if !isNaN(currentPrice)}
 						{formatNumber(currentPrice)} $
 					{:else}
-						<span aria-busy="true" />
+						<span aria-busy="true"></span>
 					{/if}
 				</td>
 			</tr>
@@ -30,7 +30,7 @@
 					{#if !isNaN(exchangeRate)}
 						{formatNumber(exchangeRate, 3)} <sup>€</sup>/<sub>$</sub>
 					{:else}
-						<span aria-busy="true" />
+						<span aria-busy="true"></span>
 					{/if}
 				</td>
 			</tr>
@@ -49,7 +49,7 @@
 							<Money value={annualGross} deductTax={false} />
 						</em>
 					{:else}
-						<span aria-busy="true" />
+						<span aria-busy="true"></span>
 					{/if}
 				</td>
 			</tr>

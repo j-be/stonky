@@ -3,7 +3,7 @@
 </script>
 
 {#if loading}
-	<div aria-busy="true" />
+	<div aria-busy="true"></div>
 {:else}
 	<slot />
 {/if}

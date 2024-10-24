@@ -105,7 +105,7 @@
 				<input type="number" bind:value={firstVestPercentage} min="0" max="100" step="0.0000000001" />
 				<span>% after</span>
 				<VestingPeriod {...firstVestDuration} on:change={firstVestDurationChanged} />
-				<div />
+				<div></div>
 			</div>
 		</label>
 
@@ -115,7 +115,7 @@
 				<input type="number" bind:value={subsequentVestsPercentage} min="0" max="100" step="0.0000000001" />
 				<span>% every</span>
 				<VestingPeriod {...subsequentVestsDuration} on:change={subsequentVestsDurationChanged} />
-				<div />
+				<div></div>
 			</div>
 		</label>
 
@@ -123,26 +123,25 @@
 			<header>
 				<h2>Sellings</h2>
 			</header>
-			<body>
-				{#if sellings?.length}
-					<div>
-						{#each sellings as selling, i}
-							<a href="/edit/rsu/{id}/sellings/{i}" class="icon edit">&#8288;</a>
-							<span class="muted">On</span>
-							{selling.date}
-							<span class="muted">sold</span>
-							{selling.count} stocks <span class="muted">for</span>
-							{formatNumber(selling.price)} $ each <span class="muted">=</span>
-							<Money value={selling.count * selling.price} deductTax={false} />
-							<hr />
-						{/each}
-					</div>
-				{:else}
-					<p>Nothing sold yet</p>
-				{/if}
-			</body>
+
+			{#if sellings?.length}
+				<div>
+					{#each sellings as selling, i}
+						<a href="/edit/rsu/{id}/sellings/{i}" class="icon edit">&#8288;</a>
+						<span class="muted">On</span>
+						{selling.date}
+						<span class="muted">sold</span>
+						{selling.count} stocks <span class="muted">for</span>
+						{formatNumber(selling.price)} $ each <span class="muted">=</span>
+						<Money value={selling.count * selling.price} deductTax={false} />
+						<hr />
+					{/each}
+				</div>
+			{:else}
+				<p>Nothing sold yet</p>
+			{/if}
 			<footer>
-				<a href="/add/rsu/{id}/sellings/" role="button"><span class="icon add" />&nbsp;Add selling</a>
+				<a href="/add/rsu/{id}/sellings/" role="button"><span class="icon add"></span>&nbsp;Add selling</a>
 			</footer>
 		</article>
 
