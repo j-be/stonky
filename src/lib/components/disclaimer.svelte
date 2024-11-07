@@ -4,11 +4,9 @@
 	const handleDisclaimerButton = () => {
 		settingsStore.update((current) => ({ ...current, hideDisclaimer: true }));
 	};
-
-	$: settings = $settingsStore;
 </script>
 
-<details open={!settings?.hideDisclaimer}>
+<details open={!$settingsStore?.hideDisclaimer}>
 	<summary>Disclaimer & Infos</summary>
 
 	<div class="disclaimer">
@@ -49,9 +47,9 @@
 			IN THE SOFTWARE.
 		</div>
 	</div>
-	{#if !settings.hideDisclaimer}
+	{#if !$settingsStore.hideDisclaimer}
 		<div class="hideButton">
-			<button on:click={handleDisclaimerButton}>Hide on load</button>
+			<button onclick={handleDisclaimerButton}>Hide on load</button>
 		</div>
 	{/if}
 </details>
