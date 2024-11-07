@@ -2,13 +2,6 @@
 	import { annualGrossStore, exchangeRateStore, stockPriceStore, taxStore } from '$lib/stores';
 	import Money from '$lib/components/money.svelte';
 	import { formatNumber } from '$lib/utils';
-
-	let currentPrice = NaN;
-	let exchangeRate = NaN;
-
-	$: exchangeRate = $exchangeRateStore;
-	$: currentPrice = $stockPriceStore;
-	$: annualGross = $annualGrossStore;
 </script>
 
 <article class="overview">
@@ -17,8 +10,8 @@
 			<tr>
 				<th>Stock price</th>
 				<td>
-					{#if !isNaN(currentPrice)}
-						{formatNumber(currentPrice)} $
+					{#if !isNaN($stockPriceStore)}
+						{formatNumber($stockPriceStore)} $
 					{:else}
 						<span aria-busy="true"></span>
 					{/if}
@@ -27,8 +20,8 @@
 			<tr>
 				<th>Exchange rate</th>
 				<td>
-					{#if !isNaN(exchangeRate)}
-						{formatNumber(exchangeRate, 3)} <sup>€</sup>/<sub>$</sub>
+					{#if !isNaN($exchangeRateStore)}
+						{formatNumber($exchangeRateStore, 3)} <sup>€</sup>/<sub>$</sub>
 					{:else}
 						<span aria-busy="true"></span>
 					{/if}
@@ -44,9 +37,9 @@
 			<tr>
 				<th>RSU annual gross</th>
 				<td>
-					{#if !isNaN(annualGross)}
-						<em data-tooltip={`Net: ${formatNumber(annualGross * $taxStore * $exchangeRateStore, 2)} €`}>
-							<Money value={annualGross} deductTax={false} />
+					{#if !isNaN($annualGrossStore)}
+						<em data-tooltip={`Net: ${formatNumber($annualGrossStore * $taxStore * $exchangeRateStore, 2)} €`}>
+							<Money value={$annualGrossStore} deductTax={false} />
 						</em>
 					{:else}
 						<span aria-busy="true"></span>
