@@ -74,7 +74,7 @@ test('add ESPPs', async ({ page }) => {
 	await expect(page.locator('.overview').getByText('RSU annual gross0.00 € (0.00 $)')).toBeVisible();
 	const espp = page.locator('details').nth(1);
 	await expect(espp).toBeVisible();
-	await expect(espp.getByText(/espp 128 10,626.97 € \(11,807.74 \$\)/)).toBeVisible();
+	await expect(espp.getByText('espp 128 10,626.97 € (11,807.74 $)')).toBeVisible();
 
 	espp.click();
 
