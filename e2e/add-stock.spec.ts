@@ -16,7 +16,7 @@ test('add RSUs', async ({ page }) => {
 
 	// Input values
 	await page.getByLabel('Number of shares').isVisible();
-	await page.getByText('rsu').click();
+	await page.getByText('rsu', { exact: true }).click();
 	await page.getByLabel('Number of shares').fill('128');
 	await page.getByLabel('Granted').fill('2022-11-10');
 	await page.locator('#firstVest').locator('input').nth(0).fill('25');
