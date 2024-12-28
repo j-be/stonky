@@ -7,4 +7,5 @@ export default defineConfig({
 	},
 
 	testDir: 'e2e',
+	workers: 1,
 });
