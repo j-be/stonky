@@ -1,6 +1,17 @@
-export const forgeYFinanceResponse = (value: number) => ({
-	chart: { result: [{ indicators: { adjclose: [{ adjclose: [value] }] } }] },
-});
+export const forgeYFinanceResponse = (value: number) => {
+	const adjclose = Math.random() < 0.5 ? [value] : undefined;
+
+	return {
+		chart: {
+			result: [
+				{
+					indicators: { adjclose: [{ adjclose }] },
+					meta: { chartPreviousClose: value },
+				},
+			],
+		},
+	};
+};
 
 export const forgeRsu = (values?: object) => ({
 	count: 123,
