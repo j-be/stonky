@@ -54,6 +54,7 @@ const fetchForDates = (start: Date, end: Date, symbol: string) => {
 		&interval=1d&includePrePost=False&events=div%2Csplits%2CcapitalGains`,
 	)
 		.then((response) => response.json())
-		.then((data) => data.chart.result[0].indicators.adjclose[0].adjclose)
-		.then((adjclose) => adjclose[adjclose.length - 1]);
+		.then((data) => data.chart.result[0])
+		.then((data) => [data.indicators.adjclose[0].adjclose, data.meta.chartPreviousClose])
+		.then(([adjclose, chartPreviousClose]) => adjclose?.[adjclose.length - 1] ?? chartPreviousClose);
 };
