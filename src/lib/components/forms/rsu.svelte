@@ -10,15 +10,19 @@
 
 	const defaultDuration: Duration = { amount: 1, unit: 'years' };
 
-	export let id: number | null = null;
+	interface Props {
+		id?: number | null;
+	}
 
-	let count = 0;
-	let granted = '';
-	let firstVestPercentage = 0;
-	let firstVestDuration: Duration = { ...defaultDuration };
-	let subsequentVestsPercentage = 0;
-	let subsequentVestsDuration: Duration = { ...defaultDuration };
-	let sellings: Selling[] = [];
+	let { id = null }: Props = $props();
+
+	let count = $state(0);
+	let granted = $state('');
+	let firstVestPercentage = $state(0);
+	let firstVestDuration: Duration = $state({ ...defaultDuration });
+	let subsequentVestsPercentage = $state(0);
+	let subsequentVestsDuration: Duration = $state({ ...defaultDuration });
+	let sellings: Selling[] = $state([]);
 
 	let loading = false;
 
@@ -78,18 +82,19 @@
 		subsequentVestsDuration = event.detail;
 	};
 
-	$: valid =
+	let valid = $derived(
 		!!count &&
-		!!granted &&
-		!!firstVestPercentage &&
-		!!firstVestDuration.amount &&
-		!!firstVestDuration.unit &&
-		!!subsequentVestsDuration.amount &&
-		!!subsequentVestsDuration.unit;
+			!!granted &&
+			!!firstVestPercentage &&
+			!!firstVestDuration.amount &&
+			!!firstVestDuration.unit &&
+			!!subsequentVestsDuration.amount &&
+			!!subsequentVestsDuration.unit,
+	);
 </script>
 
 <Loading {loading}>
-	<form on:submit|preventDefault={save}>
+	<form onsubmit={save}>
 		<label for="count">
 			Number of shares
 			<input id="count" type="number" bind:value={count} min="0" step="1" />

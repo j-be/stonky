@@ -2,8 +2,12 @@
 	import type { Duration, TemporalUnit } from '$lib/model';
 	import { createEventDispatcher } from 'svelte';
 
-	export let amount: number;
-	export let unit: TemporalUnit;
+	interface Props {
+		amount: number;
+		unit: TemporalUnit;
+	}
+
+	let { amount = $bindable(), unit = $bindable() }: Props = $props();
 
 	const dispatch = createEventDispatcher<{ change: Duration }>();
 
@@ -13,8 +17,8 @@
 </script>
 
 <div class="vesting-period">
-	<input type="number" bind:value={amount} min="1" on:change={onChangeHandler} />
-	<select bind:value={unit} on:change={onChangeHandler}>
+	<input type="number" bind:value={amount} min="1" onchange={onChangeHandler} />
+	<select bind:value={unit} onchange={onChangeHandler}>
 		{#each ['years', 'quarters', 'months'] as option (option)}
 			<option value={option}>{option}</option>
 		{/each}
