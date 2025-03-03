@@ -3,7 +3,7 @@
 	import Rsu from '$lib/components/forms/rsu.svelte';
 	import type { StockType } from '$lib/model';
 
-	let stockType: StockType = 'espp';
+	let stockType: StockType = $state('espp');
 </script>
 
 <fieldset>

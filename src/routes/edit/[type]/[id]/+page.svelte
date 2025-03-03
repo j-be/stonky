@@ -4,7 +4,11 @@
 	import Rsu from '$lib/components/forms/rsu.svelte';
 	import { stocksStore } from '$lib/stores';
 
-	export let data: { id: number; type: StockType };
+	interface Props {
+		data: { id: number; type: StockType };
+	}
+
+	let { data }: Props = $props();
 
 	let { id, type } = data;
 
@@ -39,7 +43,7 @@
 			</div>
 		</div>
 		<div>
-			<button on:click={handleDelete}>Delete</button>
+			<button onclick={handleDelete}>Delete</button>
 		</div>
 	</div>
 </details>
