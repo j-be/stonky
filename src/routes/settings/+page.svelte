@@ -4,8 +4,8 @@
 	import { onMount } from 'svelte';
 	import Loading from '$lib/components/loading.svelte';
 
-	let incomeTaxPercents: number;
-	let loading = true;
+	let incomeTaxPercents: number = $state(0);
+	let loading = $state(true);
 
 	const save = () => {
 		if (incomeTaxPercents) {
@@ -19,11 +19,11 @@
 		loading = false;
 	});
 
-	$: valid = incomeTaxPercents !== null;
+	let valid = $derived(incomeTaxPercents !== null);
 </script>
 
 <Loading {loading}>
-	<form on:submit|preventDefault={save}>
+	<form onsubmit={save}>
 		<label for="income_tax">
 			Income tax [%]
 			<input id="income_tax" type="number" bind:value={incomeTaxPercents} min="0" max="100" step="0.1" />

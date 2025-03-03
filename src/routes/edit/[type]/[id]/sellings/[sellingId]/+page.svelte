@@ -1,7 +1,11 @@
 <script lang="ts">
 	import Selling from '$lib/components/forms/selling.svelte';
 
-	export let data: { rsuId: number; sellingId: number };
+	interface Props {
+		data: { rsuId: number; sellingId: number };
+	}
+
+	let { data }: Props = $props();
 
 	let { rsuId, sellingId } = data;
 </script>

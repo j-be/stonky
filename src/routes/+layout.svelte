@@ -1,5 +1,12 @@
-<script>
+<script lang="ts">
+	import type { Snippet } from 'svelte';
 	import '../app.scss';
+
+	interface Props {
+		children?: Snippet;
+	}
+
+	let { children }: Props = $props();
 </script>
 
 <nav>
@@ -8,7 +15,7 @@
 	</div>
 </nav>
 <main class="container">
-	<slot />
+	{@render children?.()}
 </main>
 <footer>
 	<div class="container">
