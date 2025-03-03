@@ -2,11 +2,15 @@
 	import FormattedNumber from './formattedNumber.svelte';
 	import { exchangeRateStore, taxStore } from '$lib/stores';
 
-	export let value: number;
-	export let deductTax = true;
-	export let exchangeRate: number | null = null;
+	interface Props {
+		value: number;
+		deductTax?: boolean;
+		exchangeRate?: number | null;
+	}
 
-	$: dollarToEuro = exchangeRate ?? $exchangeRateStore;
+	let { value, deductTax = true, exchangeRate = null }: Props = $props();
+
+	let dollarToEuro = $derived(exchangeRate ?? $exchangeRateStore);
 </script>
 
 {#if isNaN(dollarToEuro) || isNaN(value)}
