@@ -5,13 +5,17 @@
 	import ActionButtons from './actionButtons.svelte';
 	import { onMount } from 'svelte';
 
-	export let id: number | null = null;
+	interface Props {
+		id?: number | null;
+	}
 
-	let periodStart = '';
-	let periodEnd = '';
-	let count = 0;
+	let { id = null }: Props = $props();
 
-	let loading = true;
+	let periodStart = $state('');
+	let periodEnd = $state('');
+	let count = $state(0);
+
+	let loading = $state(true);
 
 	onMount(() => {
 		if (id !== null && $stocksStore.espp.stocks[id]) {
@@ -52,11 +56,11 @@
 		history.back();
 	};
 
-	$: valid = !!periodStart && !!periodEnd && !!count;
+	let valid = $derived(!!periodStart && !!periodEnd && !!count);
 </script>
 
 <Loading {loading}>
-	<form on:submit|preventDefault={save}>
+	<form onsubmit={save}>
 		<label for="count">
 			Number of shares
 			<input id="count" type="number" bind:value={count} min="0" />
@@ -64,7 +68,7 @@
 		<div class="grid">
 			<label for="periodStart">
 				Start
-				<input id="periodStart" type="date" bind:value={periodStart} on:change={handlePeriodStartChange} />
+				<input id="periodStart" type="date" bind:value={periodStart} onchange={handlePeriodStartChange} />
 			</label>
 			<label for="periodEnd">
 				End

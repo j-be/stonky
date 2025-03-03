@@ -5,13 +5,17 @@
 	import ActionButtons from './actionButtons.svelte';
 	import { format } from 'date-fns';
 
-	export let rsuId: number;
-	export let sellingId: number | null = null;
+	interface Props {
+		rsuId: number;
+		sellingId?: number | null;
+	}
 
-	let count = 0;
-	let price = 0;
-	let date = '';
-	let loading = true;
+	let { rsuId, sellingId = null }: Props = $props();
+
+	let count = $state(0);
+	let price = $state(0);
+	let date = $state('');
+	let loading = $state(true);
 
 	onMount(() => {
 		if (rsuId === null || !$stocksStore.rsu.stocks[rsuId]) {
@@ -53,11 +57,11 @@
 		history.back();
 	};
 
-	$: valid = !!count && !!price && price > 0 && !!date;
+	let valid = $derived(!!count && !!price && price > 0 && !!date);
 </script>
 
 <Loading {loading}>
-	<form on:submit|preventDefault={save}>
+	<form onsubmit={save}>
 		<label for="count">
 			Number of shares
 			<input id="count" type="number" bind:value={count} min="0" step="1" />

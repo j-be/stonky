@@ -1,8 +1,12 @@
 <script lang="ts">
-	export let valid = true;
+	interface Props {
+		valid?: boolean;
+	}
+
+	let { valid = true }: Props = $props();
 </script>
 
 <div class="action-buttons">
-	<button type="button" class="secondary" on:click={() => history.back()}>Cancel</button>
+	<button type="button" class="secondary" onclick={() => history.back()}>Cancel</button>
 	<button type="submit" disabled={!valid}>Save</button>
 </div>
