@@ -1,9 +1,13 @@
 <script lang="ts">
 	import { formatNumber } from '$lib/utils';
 
-	export let value: number;
-	export let digits = 2;
-	export let unit = '';
+	interface Props {
+		value: number;
+		digits?: number;
+		unit?: string;
+	}
+
+	let { value, digits = 2, unit = '' }: Props = $props();
 </script>
 
 {#if isNaN(value)}
