@@ -8,7 +8,7 @@
 
 <fieldset>
 	<legend>Type</legend>
-	{#each ['espp', 'rsu'] as type}
+	{#each ['espp', 'rsu'] as type (type)}
 		<label>
 			<input type="radio" name="type" value={type} bind:group={stockType} />
 			<span class="uppercase">{type}</span>

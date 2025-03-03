@@ -15,7 +15,7 @@
 <div class="vesting-period">
 	<input type="number" bind:value={amount} min="1" on:change={onChangeHandler} />
 	<select bind:value={unit} on:change={onChangeHandler}>
-		{#each ['years', 'quarters', 'months'] as option}
+		{#each ['years', 'quarters', 'months'] as option (option)}
 			<option value={option}>{option}</option>
 		{/each}
 	</select>

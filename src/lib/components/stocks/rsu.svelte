@@ -7,14 +7,17 @@
 	import FormattedNumber from '../formattedNumber.svelte';
 	import Money from '../money.svelte';
 
-	export let rsus: RestrictedStockUnits[];
+	interface Props {
+		rsus: RestrictedStockUnits[];
+	}
 
-	let vests: RsuVest[] = [];
-	let perMonth: number = NaN;
+	let { rsus }: Props = $props();
 
-	$: flattenRsus(rsus).then((flattened) => {
-		vests = flattened.vests;
-		perMonth = flattened.perMonth;
+	let vests: RsuVest[] = $state([]);
+	let perMonth: number = $state(NaN);
+
+	$effect(() => {
+		flattenRsus(rsus).then((flattened) => ({ vests, perMonth } = flattened));
 	});
 
 	let scrollContainer: Element;
