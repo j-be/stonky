@@ -56,5 +56,7 @@ const fetchForDates = (start: Date, end: Date, symbol: string) => {
 		.then((response) => response.json())
 		.then((data) => data.chart.result[0])
 		.then((data) => [data.indicators.adjclose[0].adjclose, data.meta.chartPreviousClose])
-		.then(([adjclose, chartPreviousClose]) => adjclose?.[adjclose.length - 1] ?? chartPreviousClose);
+		.then(([adjclose, chartPreviousClose]) => adjclose?.[adjclose.length - 1] ?? chartPreviousClose)
+		.then((value) => value ?? Number.NaN)
+		.catch(() => Number.NaN);
 };
