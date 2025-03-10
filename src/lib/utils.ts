@@ -73,11 +73,16 @@ const vest = async (date: VestDate, count: number): Promise<RsuVest> => {
 	};
 };
 
-export const formatNumber = (value: number, digits = 2) =>
-	value.toLocaleString(undefined, {
+export const formatNumber = (value: number, digits = 2) => {
+	if (isNaN(value)) {
+		return '???';
+	}
+
+	return value.toLocaleString(undefined, {
 		minimumFractionDigits: digits,
 		maximumFractionDigits: digits,
 	});
+};
 
 const toMonths = (duration: Duration): number => {
 	switch (duration.unit) {
