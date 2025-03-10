@@ -36,7 +36,9 @@ export const fetchForNow = async (symbol: string): Promise<number> => {
 	}
 
 	const value = await fetchForDates(addDays(today, -7), today, symbol);
-	write({ date, value });
+	if (value) {
+		write({ date, value });
+	}
 	return value;
 };
 
