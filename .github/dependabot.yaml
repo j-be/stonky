@@ -7,6 +7,7 @@ updates:
     groups:
       lint-build-test:
         patterns:
+        - "@eslint/*"
         - "@playwright/test"
         - "@typescript-eslint/*"
         - "eslint"
