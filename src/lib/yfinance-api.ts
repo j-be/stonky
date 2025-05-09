@@ -54,6 +54,11 @@ const fetchForDates = (start: Date, end: Date, symbol: string) => {
 	return fetch(
 		`${BASE_URL}/${symbol}?period1=${epochStart}&period2=${epochEnd}
 		&interval=1d&includePrePost=False&events=div%2Csplits%2CcapitalGains`,
+		{
+			headers: {
+				'User-Agent': window.crypto.randomUUID(),
+			},
+		},
 	)
 		.then((response) => response.json())
 		.then((data) => data.chart.result[0])
