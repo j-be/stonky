@@ -31,7 +31,7 @@
 		"globals": "^16.1.0",
 		"prettier": "^3.5.2",
 		"prettier-plugin-svelte": "^3.3.3",
-		"sass": "^1.87.0",
+		"sass": "^1.88.0",
 		"svelte": "^5.28.2",
 		"svelte-check": "^4.1.7",
 		"typescript": "^5.8.3",
