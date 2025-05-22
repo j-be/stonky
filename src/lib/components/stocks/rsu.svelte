@@ -56,7 +56,7 @@
 		</thead>
 		<tbody>
 			{#each vests as vest}
-				<tr class:muted={vest.date.isInPast}>
+				<tr class:muted={vest.date.isInPast} class:last={vest.last}>
 					<td>{vest.date.dateString}</td>
 					<td><FormattedNumber value={vest.count} /></td>
 					<td>

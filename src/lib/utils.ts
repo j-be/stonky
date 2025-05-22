@@ -35,6 +35,8 @@ export const flattenRsu = async (rsu: RestrictedStockUnits): Promise<{ vests: Rs
 		);
 	}
 
+	vests[vests.length - 1].last = true;
+
 	const duration = intervalToDuration({
 		start: new Date(rsu.granted),
 		end: new Date(vests[vests.length - 1].date.dateString),
