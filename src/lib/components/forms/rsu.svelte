@@ -8,8 +8,6 @@
 	import Money from '../money.svelte';
 	import { formatNumber } from '$lib/utils';
 
-	const defaultDuration: Duration = { amount: 1, unit: 'years' };
-
 	interface Props {
 		id?: number | null;
 	}
@@ -18,10 +16,10 @@
 
 	let count = $state(0);
 	let granted = $state('');
-	let firstVestPercentage = $state(0);
-	let firstVestDuration: Duration = $state({ ...defaultDuration });
-	let subsequentVestsPercentage = $state(0);
-	let subsequentVestsDuration: Duration = $state({ ...defaultDuration });
+	let firstVestPercentage = $state(33.3333333333);
+	let firstVestDuration: Duration = $state({ amount: 1, unit: 'years' });
+	let subsequentVestsPercentage = $state(8.3333333333);
+	let subsequentVestsDuration: Duration = $state({ amount: 1, unit: 'quarters' });
 	let sellings: Selling[] = $state([]);
 
 	let loading = false;
