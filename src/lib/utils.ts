@@ -20,19 +20,17 @@ export const flattenRsus = async (rsus: RestrictedStockUnits[]): Promise<{ vests
 };
 
 export const flattenRsu = async (rsu: RestrictedStockUnits): Promise<{ vests: RsuVest[]; perMonth: number }> => {
-	const vests = [await vest(getDate(rsu.granted, 1, rsu.firstVest.duration), rsu.count * rsu.firstVest.percentage)];
+	const firstVestAmount = rsu.count * rsu.firstVest.percentage;
+	const vests = [await vest(getDate(rsu.granted, 1, rsu.firstVest.duration), firstVestAmount)];
 
-	let vested = rsu.firstVest.percentage;
-	let i = 0;
-	while (Math.abs(vested - 1) > 0.0000001) {
-		vested += rsu.subsequentVests.percentage;
-		i++;
-		vests.push(
-			await vest(
-				getDate(vests[0].date.dateString, i, rsu.subsequentVests.duration),
-				rsu.count * rsu.subsequentVests.percentage,
-			),
-		);
+	const subsequentVestAmount = rsu.count * rsu.subsequentVests.percentage;
+	let remainder = rsu.count - firstVestAmount;
+	let vestDate = vests[0].date;
+	while (remainder > 1) {
+		vestDate = getDate(vestDate.dateString, 1, rsu.subsequentVests.duration);
+		vests.push(await vest(vestDate, Math.min(remainder, subsequentVestAmount)));
+
+		remainder -= subsequentVestAmount;
 	}
 
 	vests[vests.length - 1].last = true;
