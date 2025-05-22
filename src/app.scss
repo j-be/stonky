@@ -16,6 +16,11 @@ body {
 	color: var(--pico-color);
 }
 
+.last {
+	font-style: italic;
+	text-decoration: underline;
+}
+
 .uppercase {
 	text-transform: uppercase;
 }

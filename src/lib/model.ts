@@ -52,4 +52,5 @@ export interface RsuVest {
 	date: VestDate;
 	price: number | null;
 	exchangeRate: number | null;
+	last?: boolean;
 }
