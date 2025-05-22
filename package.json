@@ -16,7 +16,7 @@
 		"test:unit": "vitest"
 	},
 	"dependencies": {
-		"@picocss/pico": "^2.0.6",
+		"@picocss/pico": "^2.1.1",
 		"date-fns": "^4.1.0"
 	},
 	"devDependencies": {
