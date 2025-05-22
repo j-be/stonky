@@ -1,5 +1,4 @@
-@use 'sass:map';
-@import '@picocss/pico/scss/pico'; /* To import only what you need from Pico [check the documentaion](https://picocss.com/docs/customization.html) */
+@use "@picocss/pico/scss/pico" as pico; /* To import only what you need from Pico [check the documentaion](https://picocss.com/docs/customization.html) */
 /* Write your global styles here, in SCSS syntax. Variables and mixins from the src/variables.scss file are available here without importing */
 
 html,
@@ -219,7 +218,7 @@ nav {
 
 	h1 {
 		margin: 0;
-		@media screen and (max-width: map.get($breakpoints, 'sm', 'breakpoint')) {
+		@media screen and (max-width: map-get(pico.$breakpoints, 'sm', 'breakpoint')) {
 			width: 100%;
 			text-align: center;
 		}
