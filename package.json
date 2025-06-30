@@ -32,7 +32,7 @@
 		"prettier": "^3.6.0",
 		"prettier-plugin-svelte": "^3.4.0",
 		"sass": "^1.89.2",
-		"svelte": "^5.34.7",
+		"svelte": "^5.34.9",
 		"svelte-check": "^4.2.2",
 		"typescript": "^5.8.3",
 		"typescript-eslint": "^8.35.0",
