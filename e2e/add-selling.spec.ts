@@ -50,7 +50,7 @@ test('edit RSU selling', async ({ page }) => {
 	await expect(editButton).toBeVisible();
 	await editButton.click();
 
-	await expect(page.getByText('Number of shares')).toBeVisible();
+	await expect(page.getByText('Price [$]')).toBeVisible();
 	const countInput = page.locator('input').nth(0);
 	await expect(await countInput.inputValue()).toBe('12');
 	await countInput.fill('36');
