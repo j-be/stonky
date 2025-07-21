@@ -9,6 +9,7 @@ updates:
         patterns:
         - "@eslint/*"
         - "@playwright/test"
+        - "@sveltejs/vite-plugin-svelte"
         - "@typescript-eslint/*"
         - "eslint"
         - "eslint-config-prettier"
