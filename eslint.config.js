@@ -32,6 +32,7 @@ export default ts.config(
 		},
 		rules: {
 			'svelte/require-each-key': 'off',
+			'svelte/no-navigation-without-resolve': 'off',
 		},
 	},
 );
