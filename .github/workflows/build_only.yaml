@@ -1,0 +1,45 @@
+name: Build
+
+on:
+  push:
+    branches:
+    - '**'
+    - '!main'
+
+jobs:
+  buildx:
+    name: Build only
+
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    # Build Stonky
+    - name: Setup Node
+      uses: actions/setup-node@v4
+      with:
+        node-version: '22'
+
+    - name: Build
+      run: |
+        npm install
+        npm run build
+
+    # Setup Buildx
+    - name: Set up QEMU
+      uses: docker/setup-qemu-action@v2
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v2
+      with:
+        platforms: linux/amd64,linux/arm64
+
+    # Build
+    - name: Build
+      uses: docker/build-push-action@v4
+      with:
+        context: .
+        push: false
+        platforms: linux/amd64,linux/arm64
