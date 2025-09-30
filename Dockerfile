@@ -1,4 +1,4 @@
-FROM bitnami/nginx
+FROM bitnamisecure/nginx
 
 ENV NGINX_SKIP_SAMPLE_CERTS=true
 
