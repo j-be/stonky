@@ -56,6 +56,7 @@ const fetchForDates = (start: Date, end: Date, symbol: string) => {
 		&interval=1d&includePrePost=False&events=div%2Csplits%2CcapitalGains`,
 		{
 			headers: {
+				// Apparently, the below is not supported in newer Chrome/Chromium versions
 				'User-Agent': window.crypto.randomUUID(),
 			},
 		},
