@@ -31,13 +31,13 @@
 		"globals": "^16.5.0",
 		"prettier": "^3.7.4",
 		"prettier-plugin-svelte": "^3.4.1",
-		"sass": "^1.96.0",
+		"sass": "^1.97.1",
 		"svelte": "^5.46.0",
-		"svelte-check": "^4.3.4",
+		"svelte-check": "^4.3.5",
 		"typescript": "^5.9.3",
 		"vite": "^7.3.0",
-		"typescript-eslint": "^8.49.0",
-		"vitest": "^4.0.15"
+		"typescript-eslint": "^8.50.0",
+		"vitest": "^4.0.16"
 	},
 	"type": "module"
 }
