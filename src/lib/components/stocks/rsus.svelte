@@ -4,11 +4,8 @@
 	import Rsu from './rsu.svelte';
 	import StocksHeader from './stocksHeader.svelte';
 
-	let count = NaN;
-	let value = NaN;
-
-	$: count = $rsuStore.reduce((prev, current) => prev + current.count, 0);
-	$: value = count * $stockPriceStore;
+	let count = $derived($rsuStore.reduce((prev, current) => prev + current.count, 0));
+	let value = $derived(count * $stockPriceStore);
 </script>
 
 <details open>
