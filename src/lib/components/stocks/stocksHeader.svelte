@@ -2,10 +2,13 @@
 	import type { StockType } from '$lib/model';
 	import Money from '../money.svelte';
 
-	export let id: number | null = null;
-	export let type: StockType;
-	export let count: number | undefined;
-	export let value: number;
+	interface Props {
+		id?: number | null;
+		type: StockType;
+		count: number;
+		value: number;
+	}
+	let { id = null, type, count, value }: Props = $props();
 </script>
 
 <div class="title">
