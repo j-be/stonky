@@ -1,4 +1,4 @@
-import { add, format, intervalToDuration, isPast } from 'date-fns';
+import { add, addDays, format, intervalToDuration, isPast } from 'date-fns';
 import type { Duration, RestrictedStockUnits, RsuVest, VestDate } from './model';
 import { fetchForDateString } from './yfinance-api';
 
@@ -54,7 +54,7 @@ const getDate = (startDate: string, i: number, duration: Duration) => {
 	const date = add(new Date(startDate), dur);
 	return {
 		dateString: format(date, 'yyyy-MM-dd'),
-		isInPast: isPast(date),
+		isInPast: isPast(addDays(date, 1)),
 	};
 };
 
