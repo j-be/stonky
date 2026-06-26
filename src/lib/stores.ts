@@ -2,7 +2,7 @@ import type { EmployeeStockPurchase, RestrictedStockUnits } from './model';
 import { derived, readable, writable, type Writable } from 'svelte/store';
 import { fetchForNow } from './yfinance-api';
 import { storageReadWrite } from './persistence/storage';
-import { getDurationInMonths } from './utils';
+import { getDurationInMonths, isRsuFullyVested } from './utils';
 
 /*
  * Types
@@ -61,14 +61,16 @@ export const stockPriceStore = readable(NaN, function start(set) {
 });
 
 export const annualGrossStore = derived([stocksStore, stockPriceStore], ([$stocks, $price]) => {
-	if (!$stocks.rsu.stocks.length) {
-		return 0;
-	} else if (isNaN($price)) {
+	if (isNaN($price)) {
 		return NaN;
 	}
-	return $stocks.rsu.stocks
-		.map((rsu) => ((rsu.count * $price) / getDurationInMonths(rsu)) * 12)
-		.reduce((a, b) => a + b);
+
+	const stocks = $stocks.rsu.stocks.filter((rsu) => !isRsuFullyVested(rsu));
+	if (!stocks.length) {
+		return 0;
+	}
+
+	return stocks.map((rsu) => ((rsu.count * $price) / getDurationInMonths(rsu)) * 12).reduce((a, b) => a + b);
 });
 export const settingsStore = createPersistentStore<Settings>('settings', { incomeTax: 0.48, hideDisclaimer: false });
 export const taxStore = derived(settingsStore, ($settingsStore) => $settingsStore.incomeTax);
