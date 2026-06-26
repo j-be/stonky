@@ -58,6 +58,7 @@
 	};
 
 	let valid = $derived(!!count && !!price && price > 0 && !!date);
+	$effect(() => { console.log('valid', valid, count, price, date); });
 </script>
 
 <Loading {loading}>
