@@ -2,6 +2,8 @@ import { expect, test } from '@playwright/test';
 import { forgeYFinanceResponse } from './factory';
 
 test('add RSUs', async ({ page }) => {
+	page.clock.setFixedTime(new Date('2023-11-12T12:34:56Z'));
+
 	await page.route('https://yfinance.great-horned-owl.dedyn.io/v8/finance/chart/DT?*', async (route) => {
 		await route.fulfill({ json: forgeYFinanceResponse(100) });
 	});
@@ -31,7 +33,7 @@ test('add RSUs', async ({ page }) => {
 	await expect(rsu).toBeVisible();
 	await expect((await rsu.locator('summary').textContent())?.trim()).toContain('rsu 128 5,990.40 € (12,800.00 $)');
 
-	rsu.click();
+	await rsu.click();
 	const rows = rsu.getByRole('row');
 	await expect(rows).toHaveCount(15);
 	await expect((await rows.nth(1).textContent())?.trim()).toBe(
@@ -49,6 +51,8 @@ test('add RSUs', async ({ page }) => {
 });
 
 test('add ESPPs', async ({ page }) => {
+	page.clock.setFixedTime(new Date('2023-11-10T12:34:56Z'));
+
 	let requestCount = 0;
 	await page.route('https://yfinance.great-horned-owl.dedyn.io/v8/finance/chart/DT?*', async (route) => {
 		await route.fulfill({ json: forgeYFinanceResponse(100 + requestCount++) });

@@ -99,3 +99,28 @@ export const getDurationInMonths = (rsu: RestrictedStockUnits): number => {
 	const numberOfSubsequent = (1 - rsu.firstVest.percentage) / rsu.subsequentVests.percentage;
 	return toMonths(rsu.firstVest.duration) + toMonths(rsu.subsequentVests.duration) * numberOfSubsequent;
 };
+
+export const isRsuFullyVested = (rsu: RestrictedStockUnits): boolean => {
+	if (!rsu || rsu.count <= 0) return true;
+
+	const firstVestAmount = rsu.count * rsu.firstVest.percentage;
+	let remainder = rsu.count - firstVestAmount;
+
+	// first vest
+	let vestDate = getDate(rsu.granted, 1, rsu.firstVest.duration);
+	if (!vestDate.isInPast) {
+		return false;
+	}
+
+	// subsequent vests
+	const subsequentAmount = rsu.count * rsu.subsequentVests.percentage;
+	while (remainder > 1) {
+		vestDate = getDate(vestDate.dateString, 1, rsu.subsequentVests.duration);
+		if (!vestDate.isInPast) {
+			return false;
+		}
+		remainder -= subsequentAmount;
+	}
+
+	return true;
+};

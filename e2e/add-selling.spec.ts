@@ -8,6 +8,8 @@ const initStocks = (stocks) => {
 };
 
 test('add RSU selling', async ({ page }) => {
+	page.clock.setFixedTime(new Date('2023-11-10T12:34:56Z'));
+
 	await page.route('https://yfinance.great-horned-owl.dedyn.io/v8/finance/chart/EUR=X?*', async (route) => {
 		await route.fulfill({ json: forgeYFinanceResponse(0.9) });
 	});
@@ -33,6 +35,8 @@ test('add RSU selling', async ({ page }) => {
 });
 
 test('edit RSU selling', async ({ page }) => {
+	page.clock.setFixedTime(new Date('2023-11-10T12:34:56Z'));
+
 	await page.route('https://yfinance.great-horned-owl.dedyn.io/v8/finance/chart/EUR=X?*', async (route) => {
 		await route.fulfill({ json: forgeYFinanceResponse(0.9) });
 	});
@@ -66,6 +70,8 @@ test('edit RSU selling', async ({ page }) => {
 });
 
 test('RSU editing', async ({ page }) => {
+	page.clock.setFixedTime(new Date('2023-11-10T12:34:56Z'));
+
 	await page.addInitScript(initStocks, { rsu: { stocks: [forgeRsu()] }, espp: { stocks: [] } });
 
 	await page.goto('/');
@@ -80,6 +86,8 @@ test('RSU editing', async ({ page }) => {
 });
 
 test('canel RSU editing', async ({ page }) => {
+	page.clock.setFixedTime(new Date('2023-11-10T12:34:56Z'));
+
 	await page.addInitScript(initStocks, { rsu: { stocks: [forgeRsu()] }, espp: { stocks: [] } });
 
 	await page.goto('/');
