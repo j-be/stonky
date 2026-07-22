@@ -19,16 +19,13 @@ test('add RSU selling', async ({ page }) => {
 	await expect(page.getByText('RSU 123')).toBeVisible();
 
 	await page.goto('/edit/rsu/0');
-	const addButton = page.getByRole('button', { name: 'Add selling' });
-	await expect(addButton).toBeVisible();
-	await addButton.click();
+	await page.getByRole('button', { name: 'Add selling' }).click();
 
-	await expect(page.getByText('Number of shares')).toBeVisible();
-	await page.locator('input').nth(0).fill('23');
-	const dateInput = page.locator('input').nth(1);
-	await expect(dateInput).not.toBeEmpty();
-	await dateInput.fill('2023-11-15');
-	await page.locator('input').nth(2).fill('12');
+	const countInput = page.getByLabel('Number of shares');
+	await expect(countInput).toHaveValue('0');
+	await countInput.fill('23');
+	await page.getByLabel('Date').fill('2023-11-15');
+	await page.getByLabel('Price [$]').fill('12');
 
 	await page.getByRole('button', { name: 'Save' }).click();
 	await expect(page.getByText('On 2023-11-15 sold 23 stocks for 12.00 $ each = 248.40 € (276.00 $)')).toBeVisible();
@@ -85,7 +82,7 @@ test('RSU editing', async ({ page }) => {
 	await expect(page.getByText('RSU 456')).toBeVisible();
 });
 
-test('canel RSU editing', async ({ page }) => {
+test('cancel RSU editing', async ({ page }) => {
 	page.clock.setFixedTime(new Date('2023-11-10T12:34:56Z'));
 
 	await page.addInitScript(initStocks, { rsu: { stocks: [forgeRsu()] }, espp: { stocks: [] } });
