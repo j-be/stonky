@@ -7,6 +7,7 @@ on:
 
 concurrency:
   group: ${{ github.workflow }}
+  queue: max
 
 jobs:
   buildx:

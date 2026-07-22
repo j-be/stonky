@@ -1,0 +1,57 @@
+name: Dependabot auto-merge
+
+concurrency:
+  group: ${{ github.workflow }}
+  queue: max
+
+on:
+  pull_request:
+    types: [opened]
+
+permissions:
+  contents: write
+  issues: write
+  pull-requests: write
+
+jobs:
+  dependabot-automerge:
+    runs-on: ubuntu-latest
+    if: github.event.pull_request.user.login == 'dependabot[bot]'
+
+    steps:
+      - name: Dependabot metadata
+        id: metadata
+        uses: dependabot/fetch-metadata@v3
+        with:
+          github-token: "${{ secrets.GITHUB_TOKEN }}"
+
+      - name: Normalize Dependabot update type
+        id: normalize
+        uses: actions/github-script@v7
+        env:
+          UPDATE_TYPE: ${{ steps.metadata.outputs.update-type }}
+        with:
+          script: |
+            const validTypes = new Set(['patch', 'minor', 'major']);
+            const updateType = (process.env.UPDATE_TYPE || '').replace(/^version-update:semver-/, '');
+
+            if (!validTypes.has(updateType)) {
+              core.setFailed(`Unsupported update type: ${process.env.UPDATE_TYPE || '(empty)'}`);
+              return;
+            }
+
+            core.setOutput('update-type', updateType);
+            core.setOutput('should-automerge', String(['patch', 'minor'].includes(updateType)));
+
+      - name: Label Dependabot PRs with update type
+        run: gh pr edit "$PR_URL" --add-label "dependabot:${{ steps.normalize.outputs.update-type }}"
+        env:
+          PR_URL: ${{ github.event.pull_request.html_url }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Enable auto-merge for Dependabot PRs
+        if: steps.normalize.outputs.should-automerge == 'true'
+        run: gh pr merge --auto --rebase "$PR_URL"
+        env:
+          PR_URL: ${{ github.event.pull_request.html_url }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
