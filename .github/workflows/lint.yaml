@@ -6,7 +6,8 @@ on:
     - '!main'
 
 jobs:
-  check:
+  lint:
+    name: Lint
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
