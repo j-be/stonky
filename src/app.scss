@@ -194,6 +194,11 @@ body div.vest-row {
 	mask-image: url('$lib/assets/pen-to-square.svg');
 }
 
+.icon.refresh::after {
+	-webkit-mask-image: url('$lib/assets/refresh.svg');
+	mask-image: url('$lib/assets/refresh.svg');
+}
+
 a[target='_blank'] {
 	font-weight: bold;
 	&::after {
