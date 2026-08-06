@@ -9,10 +9,10 @@ test('index page has expected h1', async ({ page }) => {
 
 test('stock price and exchange rate are displayed', async ({ page }) => {
 	await page.route('https://yfinance.great-horned-owl.dedyn.io/v8/finance/chart/DT?*', async (route) => {
-		await route.fulfill({ json: forgeYFinanceResponse(123.45) });
+		await route.fulfill({ json: forgeYFinanceResponse(123.45, route.request().url()) });
 	});
 	await page.route('https://yfinance.great-horned-owl.dedyn.io/v8/finance/chart/EUR=X?*', async (route) => {
-		await route.fulfill({ json: forgeYFinanceResponse(67.89) });
+		await route.fulfill({ json: forgeYFinanceResponse(67.89, route.request().url()) });
 	});
 
 	await page.goto('/');

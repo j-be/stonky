@@ -1,12 +1,15 @@
-export const forgeYFinanceResponse = (value: number) => {
-	const adjclose = Math.random() < 0.5 ? [value] : undefined;
+export const forgeYFinanceResponse = (value: number, requestUrl?: string) => {
+	const url = requestUrl ? new URL(requestUrl) : undefined;
+	const period2 = url ? Number(url.searchParams.get('period2')) : undefined;
+	const timestamp = period2 ? period2 - 24 * 60 * 60 : Math.floor(Date.now() / 1000);
+	const close = Math.random() < 0.5 ? [value] : [value, null];
 
 	return {
 		chart: {
 			result: [
 				{
-					indicators: { adjclose: [{ adjclose }] },
-					meta: { chartPreviousClose: value },
+					timestamp: [timestamp],
+					indicators: { quote: [{ close }] },
 				},
 			],
 		},

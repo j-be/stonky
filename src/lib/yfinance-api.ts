@@ -1,4 +1,4 @@
-import { addDays, addHours, format } from 'date-fns';
+import { addDays, subDays, format } from 'date-fns';
 import { YFinanceDB } from './persistence/db';
 import { storageReadWrite } from './persistence/storage';
 
@@ -35,7 +35,7 @@ export const fetchForNow = async (symbol: string): Promise<number> => {
 		return cached.value;
 	}
 
-	const value = await fetchForDates(addDays(today, -7), today, symbol);
+	const value = await fetchForDate(today, symbol);
 	if (value) {
 		write({ date, value });
 	}
@@ -44,26 +44,54 @@ export const fetchForNow = async (symbol: string): Promise<number> => {
 
 const toEpoch = (date: Date): number => Math.floor(date.getTime() / 1000);
 
-const fetchForDate = (date: Date, symbol: string) => {
-	return fetchForDates(date, addDays(date, 1), symbol);
-};
+export const fetchForDate = async (date: Date, symbol: string): Promise<number> => {
+	const period1 = toEpoch(subDays(date, 7));
+	const period2 = toEpoch(addDays(date, 1));
 
-const fetchForDates = (start: Date, end: Date, symbol: string) => {
-	const epochStart = toEpoch(addHours(start, 4));
-	const epochEnd = toEpoch(addHours(end, 4));
-	return fetch(
-		`${BASE_URL}/${symbol}?period1=${epochStart}&period2=${epochEnd}
-		&interval=1d&includePrePost=False&events=div%2Csplits%2CcapitalGains`,
-		{
-			headers: {
-				'User-Agent': window.crypto.randomUUID(),
-			},
-		},
-	)
-		.then((response) => response.json())
-		.then((data) => data.chart.result[0])
-		.then((data) => [data.indicators.adjclose[0].adjclose, data.meta.chartPreviousClose])
-		.then(([adjclose, chartPreviousClose]) => adjclose?.[adjclose.length - 1] ?? chartPreviousClose)
-		.then((value) => value ?? Number.NaN)
-		.catch(() => Number.NaN);
+	try {
+		const response = await fetch(
+			`${BASE_URL}/${symbol}` +
+				`?period1=${period1}` +
+				`&period2=${period2}` +
+				`&interval=1d` +
+				`&includePrePost=false`,
+		);
+
+		if (!response.ok) {
+			return Number.NaN;
+		}
+
+		const result = (await response.json())?.chart?.result?.[0];
+		if (!result) {
+			return Number.NaN;
+		}
+
+		const wantedDate = date.toISOString().slice(0, 10);
+		const timestamps: number[] = result.timestamp ?? [];
+		const closes: (number | null)[] = result.indicators.quote?.[0]?.close ?? [];
+
+		let previousClose: number | undefined;
+
+		for (let i = 0; i < timestamps.length; i++) {
+			const close = closes[i];
+			if (close == null) {
+				continue;
+			}
+
+			const candleDate = new Date(timestamps[i] * 1000).toISOString().slice(0, 10);
+			if (candleDate === wantedDate) {
+				return close;
+			}
+
+			if (candleDate > wantedDate) {
+				break;
+			}
+
+			previousClose = close;
+		}
+		// Weekend / holiday -> latest previous trading close.
+		return previousClose ?? Number.NaN;
+	} catch {
+		return Number.NaN;
+	}
 };
