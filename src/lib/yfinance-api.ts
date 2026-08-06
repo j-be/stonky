@@ -25,14 +25,16 @@ export const fetchForDateString = async (dateString: string, symbol: string): Pr
 	return fetched;
 };
 
-export const fetchForNow = async (symbol: string): Promise<number> => {
+export const fetchForNow = async (symbol: string, force = false): Promise<number> => {
 	const today = new Date();
 	const date = format(today, 'yyyy-MM-dd');
 	const [read, write] = storageReadWrite<{ date: string; value: number }>(`currentPrice-${symbol}`);
 
-	const cached = read();
-	if (cached?.date === date) {
-		return cached.value;
+	if (!force) {
+		const cached = read();
+		if (cached?.date === date) {
+			return cached.value;
+		}
 	}
 
 	const value = await fetchForDate(today, symbol);

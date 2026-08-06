@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { annualGrossStore, exchangeRateStore, stockPriceStore, taxStore } from '$lib/stores';
+	import { annualGrossStore, exchangeRateStore, refreshStockPrice, stockPriceStore, taxStore } from '$lib/stores';
 	import Money from '$lib/components/money.svelte';
 	import { formatNumber } from '$lib/utils';
 </script>
@@ -12,6 +12,7 @@
 				<td>
 					{#if !isNaN($stockPriceStore)}
 						{formatNumber($stockPriceStore)} $
+						<a class="icon refresh" on:click={() => refreshStockPrice()} aria-label="Refresh stock price"> &#8288; </a>
 					{:else}
 						<span aria-busy="true"></span>
 					{/if}

@@ -56,9 +56,15 @@ export const exchangeRateStore = readable(NaN, function start(set) {
 	fetchForNow('EUR=X').then(set);
 });
 
-export const stockPriceStore = readable(NaN, function start(set) {
+export const stockPriceStore = writable(NaN, function start(set) {
 	fetchForNow('DT').then(set);
 });
+
+export const refreshStockPrice = async () => {
+	const value = await fetchForNow('DT', true);
+	stockPriceStore.set(value);
+	return value;
+};
 
 export const annualGrossStore = derived([stocksStore, stockPriceStore], ([$stocks, $price]) => {
 	if (isNaN($price)) {
