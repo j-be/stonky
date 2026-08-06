@@ -5,10 +5,10 @@ test('add RSUs', async ({ page }) => {
 	page.clock.setFixedTime(new Date('2023-11-12T12:34:56Z'));
 
 	await page.route('https://yfinance.great-horned-owl.dedyn.io/v8/finance/chart/DT?*', async (route) => {
-		await route.fulfill({ json: forgeYFinanceResponse(100) });
+		await route.fulfill({ json: forgeYFinanceResponse(100, route.request().url()) });
 	});
 	await page.route('https://yfinance.great-horned-owl.dedyn.io/v8/finance/chart/EUR=X?*', async (route) => {
-		await route.fulfill({ json: forgeYFinanceResponse(0.9) });
+		await route.fulfill({ json: forgeYFinanceResponse(0.9, route.request().url()) });
 	});
 
 	await page.goto('/');
@@ -55,10 +55,10 @@ test('add ESPPs', async ({ page }) => {
 
 	let requestCount = 0;
 	await page.route('https://yfinance.great-horned-owl.dedyn.io/v8/finance/chart/DT?*', async (route) => {
-		await route.fulfill({ json: forgeYFinanceResponse(100 + requestCount++) });
+		await route.fulfill({ json: forgeYFinanceResponse(100 + requestCount++, route.request().url()) });
 	});
 	await page.route('https://yfinance.great-horned-owl.dedyn.io/v8/finance/chart/EUR=X?*', async (route) => {
-		await route.fulfill({ json: forgeYFinanceResponse(0.9) });
+		await route.fulfill({ json: forgeYFinanceResponse(0.9, route.request().url()) });
 	});
 
 	await page.goto('/');

@@ -11,10 +11,10 @@ test('fully vested RSU excluded from totals and marked in edit', async ({ page }
 	page.clock.setFixedTime(new Date('2026-01-01T12:00:00Z'));
 
 	await page.route('https://yfinance.great-horned-owl.dedyn.io/v8/finance/chart/DT?*', async (route) => {
-		await route.fulfill({ json: forgeYFinanceResponse(100) });
+		await route.fulfill({ json: forgeYFinanceResponse(100, route.request().url()) });
 	});
 	await page.route('https://yfinance.great-horned-owl.dedyn.io/v8/finance/chart/EUR=X?*', async (route) => {
-		await route.fulfill({ json: forgeYFinanceResponse(0.9) });
+		await route.fulfill({ json: forgeYFinanceResponse(0.9, route.request().url()) });
 	});
 
 	const fullyVested = forgeRsu({ granted: '2018-01-01', count: 100 });
