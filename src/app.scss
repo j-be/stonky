@@ -180,31 +180,31 @@ body div.vest-row {
 }
 
 .icon.settings::after {
-	-webkit-mask-image: url('$lib/assets/gear.svg');
-	mask-image: url('$lib/assets/gear.svg');
+	-webkit-mask-image: url('./lib/assets/gear.svg');
+	mask-image: url('./lib/assets/gear.svg');
 }
 
 .icon.add::after {
-	-webkit-mask-image: url('$lib/assets/plus.svg');
-	mask-image: url('$lib/assets/plus.svg');
+	-webkit-mask-image: url('./lib/assets/plus.svg');
+	mask-image: url('./lib/assets/plus.svg');
 }
 
 .icon.edit::after {
-	-webkit-mask-image: url('$lib/assets/pen-to-square.svg');
-	mask-image: url('$lib/assets/pen-to-square.svg');
+	-webkit-mask-image: url('./lib/assets/pen-to-square.svg');
+	mask-image: url('./lib/assets/pen-to-square.svg');
 }
 
 .icon.refresh::after {
-	-webkit-mask-image: url('$lib/assets/refresh.svg');
-	mask-image: url('$lib/assets/refresh.svg');
+	-webkit-mask-image: url('./lib/assets/refresh.svg');
+	mask-image: url('./lib/assets/refresh.svg');
 }
 
 a[target='_blank'] {
 	font-weight: bold;
 	&::after {
 		@extend .icon;
-		-webkit-mask-image: url('$lib/assets/arrow-up-right-from-square.svg');
-		mask-image: url('$lib/assets/arrow-up-right-from-square.svg');
+		-webkit-mask-image: url('./lib/assets/arrow-up-right-from-square.svg');
+		mask-image: url('./lib/assets/arrow-up-right-from-square.svg');
 	}
 }
 
