@@ -1,8 +1,8 @@
 <script lang="ts">
-	import type { StockType } from '$lib/model';
-	import Espp from '$lib/components/forms/espp.svelte';
-	import Rsu from '$lib/components/forms/rsu.svelte';
-	import { stocksStore } from '$lib/stores';
+	import type { StockType } from '#lib/model.js';
+	import Espp from '#lib/components/forms/espp.svelte';
+	import Rsu from '#lib/components/forms/rsu.svelte';
+	import { stocksStore } from '#lib/stores.js';
 
 	interface Props {
 		data: { id: number; type: StockType };

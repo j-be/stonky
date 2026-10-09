@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { stockPriceStore, rsuStore } from '$lib/stores';
+	import { stockPriceStore, rsuStore } from '#lib/stores.js';
 
 	import Rsu from './rsu.svelte';
 	import StocksHeader from './stocksHeader.svelte';

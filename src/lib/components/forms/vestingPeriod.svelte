@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { Duration, TemporalUnit } from '$lib/model';
+	import type { Duration, TemporalUnit } from '#lib/model.js';
 	import { createEventDispatcher } from 'svelte';
 
 	interface Props {

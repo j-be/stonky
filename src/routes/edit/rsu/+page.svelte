@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { rsuStore } from '$lib/stores';
-	import { isRsuFullyVested } from '$lib/utils';
+	import { rsuStore } from '#lib/stores.js';
+	import { isRsuFullyVested } from '#lib/utils.js';
 </script>
 
 {#each $rsuStore as stock, id}

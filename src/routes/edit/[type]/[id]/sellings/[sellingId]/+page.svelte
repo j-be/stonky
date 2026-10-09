@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Selling from '$lib/components/forms/selling.svelte';
+	import Selling from '#lib/components/forms/selling.svelte';
 
 	interface Props {
 		data: { rsuId: number; sellingId: number };

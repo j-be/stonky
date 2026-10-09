@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { insertOrUpdate, stocksStore } from '$lib/stores';
+	import { insertOrUpdate, stocksStore } from '#lib/stores.js';
 	import { onMount } from 'svelte';
 	import Loading from '../loading.svelte';
 	import ActionButtons from './actionButtons.svelte';

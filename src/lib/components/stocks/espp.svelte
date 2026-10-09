@@ -3,9 +3,9 @@
 	import Money from '../money.svelte';
 	import { createEventDispatcher, onMount } from 'svelte';
 	import { intervalToDuration } from 'date-fns';
-	import { stockPriceStore, taxStore } from '$lib/stores';
-	import { fetchForDateString } from '$lib/yfinance-api';
-	import { formatNumber } from '$lib/utils';
+	import { stockPriceStore, taxStore } from '#lib/stores.js';
+	import { fetchForDateString } from '#lib/yfinance-api.js';
+	import { formatNumber } from '#lib/utils.js';
 
 	export let espp: EmployeeStockPurchase;
 

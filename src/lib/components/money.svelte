@@ -1,6 +1,6 @@
 <script lang="ts">
 	import FormattedNumber from './formattedNumber.svelte';
-	import { exchangeRateStore, taxStore } from '$lib/stores';
+	import { exchangeRateStore, taxStore } from '#lib/stores.js';
 
 	interface Props {
 		value: number;

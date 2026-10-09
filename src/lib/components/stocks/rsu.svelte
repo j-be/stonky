@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { stockPriceStore } from '$lib/stores';
+	import { stockPriceStore } from '#lib/stores.js';
 	import { onDestroy, onMount } from 'svelte';
 	import type { RestrictedStockUnits, RsuVest } from '../../model';
 

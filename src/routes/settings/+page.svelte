@@ -1,8 +1,8 @@
 <script lang="ts">
-	import ActionButtons from '$lib/components/forms/actionButtons.svelte';
-	import { settingsStore } from '$lib/stores';
+	import ActionButtons from '#lib/components/forms/actionButtons.svelte';
+	import { settingsStore } from '#lib/stores.js';
 	import { onMount } from 'svelte';
-	import Loading from '$lib/components/loading.svelte';
+	import Loading from '#lib/components/loading.svelte';
 
 	let incomeTaxPercents: number = $state(0);
 	let loading = $state(true);

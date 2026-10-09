@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { StockType } from '$lib/model';
+	import type { StockType } from '#lib/model.js';
 	import Money from '../money.svelte';
 
 	interface Props {
