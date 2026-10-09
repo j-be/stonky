@@ -1,7 +1,7 @@
 <script lang="ts">
-	import { annualGrossStore, exchangeRateStore, refreshStockPrice, stockPriceStore, taxStore } from '$lib/stores';
-	import Money from '$lib/components/money.svelte';
-	import { formatNumber } from '$lib/utils';
+	import { annualGrossStore, exchangeRateStore, refreshStockPrice, stockPriceStore, taxStore } from '#lib/stores.js';
+	import Money from '#lib/components/money.svelte';
+	import { formatNumber } from '#lib/utils.js';
 </script>
 
 <article class="overview">

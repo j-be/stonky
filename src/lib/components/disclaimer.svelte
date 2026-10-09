@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { settingsStore } from '$lib/stores';
+	import { settingsStore } from '#lib/stores.js';
 
 	const handleDisclaimerButton = () => {
 		settingsStore.update((current) => ({ ...current, hideDisclaimer: true }));

@@ -1,12 +1,12 @@
 <script lang="ts">
-	import type { Duration, Selling } from '$lib/model';
+	import type { Duration, Selling } from '#lib/model.js';
 	import Loading from '../loading.svelte';
-	import { insertOrUpdate, stocksStore } from '$lib/stores';
+	import { insertOrUpdate, stocksStore } from '#lib/stores.js';
 	import ActionButtons from './actionButtons.svelte';
 	import VestingPeriod from './vestingPeriod.svelte';
 	import { onMount } from 'svelte';
 	import Money from '../money.svelte';
-	import { formatNumber } from '$lib/utils';
+	import { formatNumber } from '#lib/utils.js';
 
 	interface Props {
 		id?: number | null;

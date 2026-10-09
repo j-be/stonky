@@ -1,4 +1,4 @@
-import { isStockType } from '$lib/model';
+import { isStockType } from '#lib/model.js';
 import { error } from '@sveltejs/kit';
 
 export function load({ params }) {

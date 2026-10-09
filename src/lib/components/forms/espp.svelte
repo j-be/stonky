@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Loading from '../loading.svelte';
-	import { insertOrUpdate, stocksStore } from '$lib/stores';
+	import { insertOrUpdate, stocksStore } from '#lib/stores.js';
 	import { addDays, addMonths, format } from 'date-fns';
 	import ActionButtons from './actionButtons.svelte';
 	import { onMount } from 'svelte';

@@ -1,7 +1,7 @@
 <script lang="ts">
-	import Espp from '$lib/components/forms/espp.svelte';
-	import Rsu from '$lib/components/forms/rsu.svelte';
-	import type { StockType } from '$lib/model';
+	import Espp from '#lib/components/forms/espp.svelte';
+	import Rsu from '#lib/components/forms/rsu.svelte';
+	import type { StockType } from '#lib/model.js';
 
 	let stockType: StockType = $state('espp');
 </script>

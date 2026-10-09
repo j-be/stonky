@@ -1,7 +1,7 @@
 <script lang="ts">
-	import { esppStore } from '$lib/stores';
-	import StocksHeader from '$lib/components/stocks/stocksHeader.svelte';
-	import Espp from '$lib/components/stocks/espp.svelte';
+	import { esppStore } from '#lib/stores.js';
+	import StocksHeader from '#lib/components/stocks/stocksHeader.svelte';
+	import Espp from '#lib/components/stocks/espp.svelte';
 
 	let values = new Map<number, number>();
 
